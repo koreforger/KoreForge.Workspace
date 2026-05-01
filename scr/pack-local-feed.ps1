@@ -2,6 +2,8 @@
 [CmdletBinding()]
 param(
     [string]$Version = '1.0.1-alpha',
+    [ValidateSet('Debug', 'Release')]
+    [string]$Configuration = 'Release',
     [switch]$CleanFeed
 )
 
@@ -17,20 +19,77 @@ $feed = Join-Path $root $config.localPackageFeed
 New-Item -ItemType Directory -Path $feed -Force | Out-Null
 if ($CleanFeed) { Remove-Item (Join-Path $feed '*.nupkg') -Force -ErrorAction SilentlyContinue }
 
+$versionCore = ($Version -split '-', 2)[0]
+$versionParts = @($versionCore -split '\.')
+if ($versionParts.Count -lt 3) { throw "Version must include major.minor.patch: $Version" }
+$assemblyVersion = "$($versionParts[0]).$($versionParts[1]).0.0"
+$fileVersion = "$($versionParts[0]).$($versionParts[1]).$($versionParts[2]).0"
+
 $repoPaths = @($config.groups | ForEach-Object { $_.paths } | Where-Object { $_ -like 'packages/*' -or $_ -like 'event/Event.Streaming' -or $_ -like 'tools/KoreForge.Jex.Cli' -or $_ -like 'tools/KoreForge.Jex.LanguageServer' })
+$pending = @()
 
 foreach ($relativePath in $repoPaths) {
     $repo = Join-Path $root $relativePath
-    $packScript = Join-Path $repo 'scr/build-pack.ps1'
-    if (-not (Test-Path $packScript)) { continue }
+    if (-not (Test-Path $repo)) { continue }
 
-    Write-Host "Packing $relativePath ($Version)" -ForegroundColor Cyan
-    & $packScript -Version $Version
-    if ($LASTEXITCODE -ne 0) { throw "Pack failed: $relativePath" }
+    $packProjects = @(
+        Get-ChildItem -Path $repo -Filter '*.csproj' -File -Recurse -ErrorAction SilentlyContinue |
+            Where-Object { $_.FullName -notmatch '\\(bin|obj|tst|tests|test|benchmarks?)\\' } |
+            Sort-Object FullName
+    )
+    if ($packProjects.Count -eq 0) { continue }
 
-    Get-ChildItem -Path $repo -Recurse -File -Filter '*.nupkg' |
-        Where-Object { $_.FullName -match '\\artifacts\\|\\out\\|\\.artifacts\\' } |
-        ForEach-Object { Copy-Item $_.FullName $feed -Force }
+    foreach ($project in $packProjects) {
+        $projectRelativePath = [System.IO.Path]::GetRelativePath($repo, $project.FullName)
+        $pending += [pscustomobject]@{
+            Repo = $repo
+            RelativePath = $relativePath
+            Project = $project
+            ProjectRelativePath = $projectRelativePath
+        }
+    }
+}
+
+$failures = @{}
+while ($pending.Count -gt 0) {
+    $nextPending = @()
+    $packedThisPass = 0
+
+    foreach ($item in $pending) {
+        Write-Host "Packing $($item.RelativePath)/$($item.ProjectRelativePath) ($Version)" -ForegroundColor Cyan
+        Push-Location $item.Repo
+        try {
+            New-Item -ItemType Directory -Path 'artifacts' -Force | Out-Null
+            & dotnet pack $item.Project.FullName -c $Configuration -o artifacts `
+                /p:MinVerSkip=true `
+                /p:Version=$versionCore `
+                /p:PackageVersion=$Version `
+                /p:AssemblyVersion=$assemblyVersion `
+                /p:FileVersion=$fileVersion
+        }
+        finally { Pop-Location }
+
+        $key = "$($item.RelativePath)/$($item.ProjectRelativePath)"
+        if ($LASTEXITCODE -ne 0) {
+            $failures[$key] = "dotnet pack failed with exit code $LASTEXITCODE"
+            $nextPending += $item
+            continue
+        }
+
+        $packedThisPass++
+        $failures.Remove($key)
+
+        Get-ChildItem -Path $item.Repo -Recurse -File -Filter '*.nupkg' |
+            Where-Object { $_.FullName -match '\\artifacts\\|\\out\\|\\.artifacts\\' } |
+            ForEach-Object { Copy-Item $_.FullName $feed -Force }
+    }
+
+    if ($packedThisPass -eq 0) {
+        $failureList = $failures.GetEnumerator() | Sort-Object Name | ForEach-Object { " - $($_.Name): $($_.Value)" }
+        throw "Unable to pack remaining projects:`n$($failureList -join [Environment]::NewLine)"
+    }
+
+    $pending = @($nextPending)
 }
 
 Write-Host "Local package feed ready: $feed" -ForegroundColor Green
