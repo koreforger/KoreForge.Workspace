@@ -1,0 +1,76 @@
+services:
+  # Redpanda (Kafka-compatible message broker)
+  redpanda:
+    image: redpandadata/redpanda:v24.1.2
+    container_name: streaming-redpanda
+    command:
+      - redpanda
+      - start
+      - --overprovisioned
+      - --smp
+      - "1"
+      - --memory
+      - 1G
+      - --reserve-memory
+      - 0M
+      - --node-id
+      - "1"
+      - --check=false
+      - --kafka-addr
+      - internal://0.0.0.0:9092,external://0.0.0.0:29092
+      - --advertise-kafka-addr
+      - internal://redpanda:9092,external://localhost:29092
+    ports:
+      - "29092:29092"
+      - "9644:9644"
+    volumes:
+      - redpanda_data:/var/lib/redpanda/data
+    healthcheck:
+      test: ["CMD-SHELL", "rpk cluster info > /dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - streamnet
+
+  # Azure SQL Edge (SQL Server compatible)
+  sqledge:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    container_name: streaming-sqledge
+    environment:
+      ACCEPT_EULA: "1"
+      MSSQL_SA_PASSWORD: "Streaming!Pass123"
+    ports:
+      - "14334:1433"
+    volumes:
+      - sqledge_data:/var/opt/mssql
+      - ./sql:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'Streaming!Pass123' -Q 'SELECT 1' > /dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - streamnet
+
+  # Redpanda Console (Kafka UI)
+  console:
+    image: redpandadata/console:v2.4.5
+    container_name: streaming-console
+    ports:
+      - "8081:8080"
+    environment:
+      KAFKA_BROKERS: "redpanda:9092"
+    depends_on:
+      redpanda:
+        condition: service_healthy
+    networks:
+      - streamnet
+
+volumes:
+  redpanda_data:
+  sqledge_data:
+
+networks:
+  streamnet:
+    driver: bridge

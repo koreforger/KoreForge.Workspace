@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "packageVersion": "1.0.1-alpha",
+  "localPackageFeed": ".artifacts/packages",
+  "groups": [
+    {
+      "name": "KoreForge packages",
+      "paths": [
+        "packages/KoreForge.Time",
+        "packages/KoreForge.Jex",
+        "packages/KoreForge.Json",
+        "packages/KoreForge.Data",
+        "packages/KoreForge.OData",
+        "packages/KoreForge.Metrics",
+        "packages/KoreForge.Metrics.AspNet",
+        "packages/KoreForge.Logging",
+        "packages/KoreForge.Logging.Serilog",
+        "packages/KoreForge.Processing",
+        "packages/KoreForge.AppLifecycle",
+        "packages/KoreForge.Kafka",
+        "packages/KoreForge.Web",
+        "packages/KoreForge.Settings",
+        "packages/KoreForge.Scripts",
+        "packages/KoreForge.Monitoring",
+        "packages/KoreForge.Templates"
+      ]
+    },
+    {
+      "name": "KoreForge tools",
+      "paths": [
+        "tools/KoreForge.Jex.Cli",
+        "tools/KoreForge.Jex.LanguageServer",
+        "tools/KoreForge.Jex.VSCodeExtension",
+        "tools/KoreForge.NuGet.IntegrationTests"
+      ]
+    },
+    {
+      "name": "KoreForge npm",
+      "paths": [
+        "npm/KoreForge.Scripts.Vue",
+        "npm/KoreForge.Monitoring.Shell",
+        "npm/KoreForge.Jex.Vue",
+        "npm/KoreForge.Kafka.Vue"
+      ]
+    },
+    {
+      "name": "Event test apps",
+      "paths": [
+        "event/Event.Streaming",
+        "event/Event.Processor",
+        "event/Event.Reader",
+        "event/Event.Benchmarks",
+        "event/Event.Writer"
+      ]
+    }
+  ]
+}
