@@ -22,7 +22,7 @@
 
 .PARAMETER OutputPath
     Full path to the output zip file.
-    Defaults to: <workspace-parent>\KoreForge-compact-{yyyy-MM-dd}.zip
+    Defaults to: <workspace-root>\artifacts\zips\KoreForge-compact-{yyyy-MM-dd}.zip
 
 .PARAMETER Overwrite
     If set, overwrite OutputPath when it already exists.
@@ -50,7 +50,9 @@ if (-not (Test-Path -Path $WorkspaceRoot -PathType Container)) {
 if ([string]::IsNullOrWhiteSpace($OutputPath)) {
     $dateSuffix = Get-Date -Format 'yyyy-MM-dd'
     $archiveName = "KoreForge-compact-$dateSuffix.zip"
-    $OutputPath = Join-Path (Split-Path $WorkspaceRoot -Parent) $archiveName
+    $archiveRoot = Join-Path $WorkspaceRoot 'artifacts\zips'
+    New-Item -Path $archiveRoot -ItemType Directory -Force | Out-Null
+    $OutputPath = Join-Path $archiveRoot $archiveName
 }
 
 $workspaceRootFull = (Resolve-Path $WorkspaceRoot).Path

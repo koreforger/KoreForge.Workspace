@@ -2295,7 +2295,7 @@ These scripts exist in every library repository's `scr/` folder. Replace `{Solut
 | `-Configuration` | `Debug` | Build configuration |
 
 **DESCRIPTION**
-    Builds the solution, runs all tests, and writes an HTML test report to `out/TestResults/TestResults.html`.
+    Builds the solution, runs all tests, and writes an HTML test report under `artifacts/repos/<repo>/test-results`.
 
 ---
 
@@ -2316,7 +2316,7 @@ These scripts exist in every library repository's `scr/` folder. Replace `{Solut
 | `-Open` | — | Open the HTML report in the default browser |
 
 **DESCRIPTION**
-    Builds the solution, runs tests with `XPlat Code Coverage` collection using `coverlet.runsettings`, then generates an HTML coverage report via ReportGenerator at `out/TestResults/coverage/index.html`.
+    Builds the solution, runs tests with `XPlat Code Coverage` collection using `coverlet.runsettings`, then generates an HTML coverage report under `artifacts/repos/<repo>/coverage`.
 
 ---
 

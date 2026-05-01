@@ -15,9 +15,13 @@ $configPath = Join-Path $root 'builder-v5.config.json'
 if (-not (Test-Path $configPath)) { throw "Missing builder manifest: $configPath" }
 
 $config = Get-Content $configPath -Raw | ConvertFrom-Json
+$artifactsRoot = Join-Path $root $(if ($config.artifactsRoot) { $config.artifactsRoot } else { 'artifacts' })
 $feed = Join-Path $root $config.localPackageFeed
+$stagingRoot = Join-Path $artifactsRoot 'packages/staging'
 New-Item -ItemType Directory -Path $feed -Force | Out-Null
 if ($CleanFeed) { Remove-Item (Join-Path $feed '*.nupkg') -Force -ErrorAction SilentlyContinue }
+if (Test-Path $stagingRoot) { Remove-Item $stagingRoot -Recurse -Force }
+New-Item -ItemType Directory -Path $stagingRoot -Force | Out-Null
 
 $versionCore = ($Version -split '-', 2)[0]
 $versionParts = @($versionCore -split '\.')
@@ -35,6 +39,7 @@ foreach ($relativePath in $repoPaths) {
     $packProjects = @(
         Get-ChildItem -Path $repo -Filter '*.csproj' -File -Recurse -ErrorAction SilentlyContinue |
             Where-Object { $_.FullName -notmatch '\\(bin|obj|tst|tests|test|benchmarks?)\\' } |
+            Where-Object { $_.FullName -notmatch '\\(templates?|samples?)\\' } |
             Sort-Object FullName
     )
     if ($packProjects.Count -eq 0) { continue }
@@ -57,10 +62,13 @@ while ($pending.Count -gt 0) {
 
     foreach ($item in $pending) {
         Write-Host "Packing $($item.RelativePath)/$($item.ProjectRelativePath) ($Version)" -ForegroundColor Cyan
+        $repoStaging = Join-Path $stagingRoot (($item.RelativePath -replace '[\\/]', '_'))
+        $repoBuildRoot = Join-Path $artifactsRoot (Join-Path 'repos' (Join-Path (Split-Path $item.Repo -Leaf) 'build'))
+        New-Item -ItemType Directory -Path $repoStaging -Force | Out-Null
         Push-Location $item.Repo
         try {
-            New-Item -ItemType Directory -Path 'artifacts' -Force | Out-Null
-            & dotnet pack $item.Project.FullName -c $Configuration -o artifacts `
+            & dotnet pack $item.Project.FullName -c $Configuration -o $repoStaging `
+                --artifacts-path $repoBuildRoot `
                 /p:MinVerSkip=true `
                 /p:Version=$versionCore `
                 /p:PackageVersion=$Version `
@@ -79,8 +87,7 @@ while ($pending.Count -gt 0) {
         $packedThisPass++
         $failures.Remove($key)
 
-        Get-ChildItem -Path $item.Repo -Recurse -File -Filter '*.nupkg' |
-            Where-Object { $_.FullName -match '\\artifacts\\|\\out\\|\\.artifacts\\' } |
+        Get-ChildItem -Path $repoStaging -File -Filter '*.nupkg' |
             ForEach-Object { Copy-Item $_.FullName $feed -Force }
     }
 

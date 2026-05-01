@@ -75,11 +75,8 @@ if ($LASTEXITCODE -ne 0) {
 Write-Host ''
 Write-Host 'Pushing packages to NuGet.org …' -ForegroundColor Cyan
 
-$packages = @(
-    Get-ChildItem -Path $root -Recurse -Filter '*.nupkg' -ErrorAction SilentlyContinue |
-        Where-Object { $_.FullName -like '*\artifacts\*' } |
-        Sort-Object FullName
-)
+$packageRoot = Join-Path $root 'artifacts/packages'
+$packages = @(Get-ChildItem -Path $packageRoot -Filter '*.nupkg' -File -ErrorAction SilentlyContinue | Sort-Object FullName)
 
 if ($packages.Count -eq 0) {
     throw 'No .nupkg files found under artifacts/ after pack.'

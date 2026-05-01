@@ -1,39 +1,48 @@
 # Naming Standard
 
-## KoreForge Packages
+KoreForge uses the public name everywhere. The short `KF.*` form is legacy only and should not be used for new folders, projects, assemblies, namespaces, packages, scripts, or documentation.
 
-| Layer | Pattern | Example |
-|---|---|---|
-| Repository folder | `KoreForge.Area` | `KoreForge.Settings` |
-| NuGet package | `KoreForge.Area` for public package families | `KoreForge.Settings` |
-| Assembly / DLL | `KF.Area` | `KF.Settings.Core` |
-| Test assembly | `KF.Area.Tests` | `KF.Settings.Tests` |
-| Namespace | `KF.Area` | `KF.Settings.Core` |
+## KoreForge Assets
 
-Some package families produce several DLLs. The repo/package family remains `KoreForge.*`; DLLs remain `KF.*`.
+| Asset | Standard | Example |
+| --- | --- | --- |
+| Repository folder | `KoreForge.Area` | `KoreForge.Kafka` |
+| Solution | `KoreForge.Area.slnx` | `KoreForge.Kafka.slnx` |
+| Project folder | `KoreForge.Area.Component` | `KoreForge.Kafka.Consumer` |
+| Project file | `KoreForge.Area.Component.csproj` | `KoreForge.Kafka.Consumer.csproj` |
+| Assembly/DLL | `KoreForge.Area.Component` | `KoreForge.Kafka.Consumer.dll` |
+| Namespace | `KoreForge.Area.Component` | `KoreForge.Kafka.Consumer.Hosting` |
+| NuGet package | `KoreForge.Area.Component` | `KoreForge.Kafka.Consumer` |
+| Test project | `KoreForge.Area.Component.Tests` | `KoreForge.Kafka.Consumer.Tests` |
 
-## Event Test Apps
+## Event Assets
 
-Event code is not KoreForge code. Event repos, packages, and assemblies should use `Event.*` for shared libraries and app package identities.
+Event applications and Event-owned test libraries use `Event.*` everywhere. They are not KoreForge packages even when they prove KoreForge behavior.
 
 Examples:
 
-```text
-event/Event.Streaming/src/Event.Streaming.Processing
-event/Event.Reader
-event/Event.Processor
-```
+- `event/Event.Streaming`
+- `event/Event.Reader`
+- `Event.Streaming.In`
+- `Event.Reader.Tests`
 
-Class names may still use readable app-specific names such as `EventReaderKafkaBatchProcessor`; do not force dotted namespace style into type names.
+## Package Mapping
 
-## Tooling
+Default runtime packages have one primary package ID and one primary assembly with the same name.
 
-JEX tooling is grouped under `tools/` but should use KoreForge repo names for clarity:
+Allowed exceptions:
 
-```text
-tools/KoreForge.Jex.Cli
-tools/KoreForge.Jex.LanguageServer
-tools/KoreForge.Jex.VSCodeExtension
-```
+- Meta-packages that carry only dependencies and may have no DLL.
+- Analyzer/source-generator packages that place assemblies under analyzer/build assets.
+- CLI/tool packages where the tool identity is the package identity.
+- Template/content packages.
 
-Assemblies may remain `KF.Jex.*` where that is the established DLL convention.
+Grouped repos are expected. A repo such as `KoreForge.Kafka` can produce several packages, but each package still has a clear public project, namespace, assembly, and package identity.
+
+## Dependencies
+
+Projects do not use `ProjectReference`. Cross-repo and cross-project dependencies use `PackageReference`, including local development. The local feed is `artifacts/packages` and is listed before nuget.org in the workspace `NuGet.config`.
+
+## Legacy Names
+
+Existing `KF.*` names are transitional debt. When touched for renovation, rename the project, assembly, namespace, package ID, and documentation together so mixed identity does not leak into new code.

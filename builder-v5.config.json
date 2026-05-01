@@ -1,7 +1,10 @@
 {
   "version": 1,
   "packageVersion": "1.0.1-alpha",
-  "localPackageFeed": ".artifacts/packages",
+  "artifactsRoot": "artifacts",
+  "localPackageFeed": "artifacts/packages",
+  "defaultBranch": "main",
+  "developmentBranch": "development",
   "groups": [
     {
       "name": "KoreForge packages",

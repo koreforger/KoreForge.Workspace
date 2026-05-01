@@ -18,7 +18,8 @@
     .github) at the parent directory with the filename:
         KoreForge-{yyyy-MM-dd}.zip
 
-    If the archive already exists it is overwritten.
+    If the archive already exists it is overwritten. Archives are written under
+    the workspace artifact root.
 
 .PARAMETER WorkspaceRoot
     Root folder of the KoreForge workspace.
@@ -122,7 +123,9 @@ if (-not $SkipZip) {
 
     $dateSuffix   = Get-Date -Format 'yyyy-MM-dd'
     $archiveName  = "KoreForge-$dateSuffix.zip"
-    $archivePath  = Join-Path (Split-Path $WorkspaceRoot -Parent) $archiveName
+    $archiveRoot  = Join-Path $WorkspaceRoot 'artifacts\zips'
+    New-Item -Path $archiveRoot -ItemType Directory -Force | Out-Null
+    $archivePath  = Join-Path $archiveRoot $archiveName
 
     if (Test-Path $archivePath) {
         Write-Verbose "  Removing existing archive: $archivePath"

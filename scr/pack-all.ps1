@@ -14,6 +14,12 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 $root = Split-Path $PSScriptRoot -Parent
+$artifactsRoot = Join-Path $root 'artifacts'
+$packageRoot = Join-Path $artifactsRoot 'packages'
+$stagingRoot = Join-Path $packageRoot 'staging'
+New-Item -Path $packageRoot -ItemType Directory -Force | Out-Null
+if (Test-Path $stagingRoot) { Remove-Item $stagingRoot -Recurse -Force }
+New-Item -Path $stagingRoot -ItemType Directory -Force | Out-Null
 
 # Repos in dependency order (leaves first).
 $repos = @(
@@ -42,7 +48,7 @@ $templateRepos = @(
 $totalPacked = 0
 
 foreach ($repo in $repos) {
-    $repoDir = Join-Path $root $repo
+    $repoDir = Join-Path $root (Join-Path 'packages' $repo)
     if (-not (Test-Path $repoDir)) {
         Write-Warning "Repo not found: $repo"
         continue
@@ -54,7 +60,8 @@ foreach ($repo in $repos) {
         continue
     }
 
-    $artifactsDir = Join-Path $repoDir 'artifacts'
+    $artifactsDir = Join-Path $stagingRoot $repo
+    $repoBuildRoot = Join-Path $artifactsRoot (Join-Path 'repos' (Join-Path $repo 'build'))
     if (Test-Path $artifactsDir) {
         Remove-Item $artifactsDir -Recurse -Force
     }
@@ -77,6 +84,8 @@ foreach ($repo in $repos) {
         /p:AssemblyVersion=$asmVer `
         /p:FileVersion=$fileVer `
         /p:ContinuousIntegrationBuild=true `
+        --artifacts-path $repoBuildRoot `
+        -o $artifactsDir `
         --no-restore 2>&1
 
     if ($LASTEXITCODE -ne 0) {
@@ -88,7 +97,9 @@ foreach ($repo in $repos) {
             /p:MinVerSkip=true `
             /p:AssemblyVersion=$asmVer `
             /p:FileVersion=$fileVer `
-            /p:ContinuousIntegrationBuild=true 2>&1
+            /p:ContinuousIntegrationBuild=true `
+            --artifacts-path $repoBuildRoot `
+            -o $artifactsDir 2>&1
 
         if ($LASTEXITCODE -ne 0) {
             Write-Error "Failed to pack $repo"
@@ -98,6 +109,7 @@ foreach ($repo in $repos) {
 
     $packages = Get-ChildItem -Path $artifactsDir -Filter '*.nupkg' -ErrorAction SilentlyContinue
     foreach ($pkg in $packages) {
+        Copy-Item -Path $pkg.FullName -Destination (Join-Path $packageRoot $pkg.Name) -Force
         Write-Host "  ✓ $($pkg.Name)" -ForegroundColor Green
         $totalPacked++
     }
@@ -113,13 +125,14 @@ Write-Host ''
 Write-Host "── Packing templates ──────────────────────────────────" -ForegroundColor Cyan
 
 foreach ($repo in $templateRepos) {
-    $repoDir = Join-Path $root $repo
+    $repoDir = Join-Path $root (Join-Path 'packages' $repo)
     if (-not (Test-Path $repoDir)) { Write-Warning "Repo not found: $repo"; continue }
 
     $csproj = Get-ChildItem -Path $repoDir -Filter '*.csproj' -File | Select-Object -First 1
     if (-not $csproj) { Write-Warning "No .csproj in $repo"; continue }
 
-    $artifactsDir = Join-Path $repoDir 'artifacts'
+    $artifactsDir = Join-Path $stagingRoot $repo
+    $repoBuildRoot = Join-Path $artifactsRoot (Join-Path 'repos' (Join-Path $repo 'build'))
     if (Test-Path $artifactsDir) { Remove-Item $artifactsDir -Recurse -Force }
 
     Write-Host ''
@@ -127,6 +140,8 @@ foreach ($repo in $templateRepos) {
 
     dotnet pack $csproj.FullName `
         --configuration Release `
+        --artifacts-path $repoBuildRoot `
+        -o $artifactsDir `
         /p:PackageVersion=$Version 2>&1
 
     if ($LASTEXITCODE -ne 0) {
@@ -136,6 +151,7 @@ foreach ($repo in $templateRepos) {
 
     $packages = Get-ChildItem -Path $artifactsDir -Filter '*.nupkg' -ErrorAction SilentlyContinue
     foreach ($pkg in $packages) {
+        Copy-Item -Path $pkg.FullName -Destination (Join-Path $packageRoot $pkg.Name) -Force
         Write-Host "  ✓ $($pkg.Name)" -ForegroundColor Green
         $totalPacked++
     }
@@ -150,5 +166,5 @@ Write-Host "══════════════════════�
 Write-Host ''
 Write-Host "All .nupkg files:" -ForegroundColor Yellow
 Get-ChildItem -Path $root -Recurse -Filter '*.nupkg' -ErrorAction SilentlyContinue |
-    Where-Object { $_.FullName -like '*artifacts*' } |
+    Where-Object { $_.FullName -like "$packageRoot*" } |
     ForEach-Object { Write-Host ('  ' + $_.FullName) }

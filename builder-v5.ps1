@@ -257,7 +257,14 @@ function Find-ReportFiles {
 
     $files = [System.Collections.Generic.List[object]]::new()
 
+    $repoName = Split-Path $RepoPath -Leaf
+    $artifactRoot = $env:KFO_ARTIFACTS_ROOT
+
     $candidateRoots = @(
+        $(if ($artifactRoot) { Join-Path $artifactRoot (Join-Path "repos" $repoName) }),
+        $(if ($artifactRoot) { Join-Path $artifactRoot "test-results" }),
+        $(if ($artifactRoot) { Join-Path $artifactRoot "coverage" }),
+        $(if ($artifactRoot) { Join-Path $artifactRoot "reports" }),
         (Join-Path $RepoPath "out"),
         (Join-Path $RepoPath "out\TestResults"),
         (Join-Path $RepoPath "TestResults"),
@@ -517,9 +524,13 @@ function Show-ReportOutputs {
 # Main
 # ---------------------------------------------------------------------------
 $rootPath = (Resolve-Path $Root).Path
+$artifactRoot = Join-Path $rootPath "artifacts"
+$env:KFO_WORKSPACE_ROOT = $rootPath
+$env:KFO_ARTIFACTS_ROOT = $artifactRoot
 $selectedConfiguration = Read-ConfigurationChoice -DefaultConfiguration $Configuration
 
 Write-Host "Root         : $rootPath"              -ForegroundColor Cyan
+Write-Host "Artifacts    : $artifactRoot"          -ForegroundColor Cyan
 Write-Host "Configuration: $selectedConfiguration" -ForegroundColor Cyan
 
 # System scripts (workspace root scr/)
@@ -555,7 +566,7 @@ if (-not $selected -or $selected.Count -eq 0) {
 }
 
 $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
-$logRoot   = Join-Path $rootPath ".artifacts\script-runner\logs\$timestamp"
+$logRoot   = Join-Path $artifactRoot "script-runner\logs\$timestamp"
 New-Item -Path $logRoot -ItemType Directory -Force | Out-Null
 
 $orderedSelection = @($selected | Sort-Object Order, Repo)

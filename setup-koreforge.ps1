@@ -31,8 +31,14 @@ Require-Command dotnet
 Require-Command git
 
 $localFolders = @(
-    (Join-Path $rootPath '.artifacts/packages'),
-    (Join-Path $rootPath '.artifacts/script-runner/logs'),
+    (Join-Path $rootPath 'artifacts/packages'),
+    (Join-Path $rootPath 'artifacts/packages/staging'),
+    (Join-Path $rootPath 'artifacts/script-runner/logs'),
+    (Join-Path $rootPath 'artifacts/repos'),
+    (Join-Path $rootPath 'artifacts/test-results'),
+    (Join-Path $rootPath 'artifacts/coverage'),
+    (Join-Path $rootPath 'artifacts/reports'),
+    (Join-Path $rootPath 'artifacts/zips'),
     (Join-Path $rootPath '.local/secrets')
 )
 
@@ -61,5 +67,6 @@ if ($CloneMissing) {
 }
 
 Write-Host "KoreForge workspace ready: $rootPath" -ForegroundColor Green
-Write-Host "Local NuGet feed: $((Join-Path $rootPath '.artifacts/packages'))" -ForegroundColor Cyan
+Write-Host "Artifacts root : $((Join-Path $rootPath 'artifacts'))" -ForegroundColor Cyan
+Write-Host "Local NuGet feed: $((Join-Path $rootPath 'artifacts/packages'))" -ForegroundColor Cyan
 Write-Host "Run .\builder-v5.ps1 to build, test, pack, or release repos." -ForegroundColor Cyan

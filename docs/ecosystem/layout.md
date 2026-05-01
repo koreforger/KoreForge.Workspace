@@ -8,13 +8,13 @@ The root folder is the workspace shell. It contains orchestration scripts, docum
 
 ## packages
 
-`packages/` contains NuGet-producing KoreForge repos. Repo and NuGet package names use `KoreForge.*`; assembly names use `KF.*`.
+`packages/` contains NuGet-producing KoreForge repos. Repo, project, package, assembly, and namespace names use `KoreForge.*`.
 
 Examples:
 
 ```text
-packages/KoreForge.Settings/src/KF.Settings/KF.Settings.csproj
-packages/KoreForge.Kafka/src/KF.Kafka.Consumer/KF.Kafka.Consumer.csproj
+packages/KoreForge.Settings/src/KoreForge.Settings/KoreForge.Settings.csproj
+packages/KoreForge.Kafka/src/KoreForge.Kafka.Consumer/KoreForge.Kafka.Consumer.csproj
 ```
 
 ## tools
@@ -46,4 +46,6 @@ packages/KoreForge.Kafka/src/KF.Kafka.Consumer/KF.Kafka.Consumer.csproj
 
 ## Dependency Rule
 
-Projects do not use `ProjectReference`. All cross-project dependencies flow through NuGet packages, including local development. The workspace `NuGet.config` points at `.artifacts/packages` before nuget.org.
+Projects do not use `ProjectReference`. All cross-project dependencies flow through NuGet packages, including local development. The workspace `NuGet.config` points at `artifacts/packages` before nuget.org.
+
+All generated output belongs under the root `artifacts/` folder. Child repos should not create repo-local `artifacts/`, `out/`, `TestResults/`, coverage, report, or benchmark output folders.
