@@ -11,7 +11,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 $root = Split-Path $PSScriptRoot -Parent
-$configPath = Join-Path $root 'builder-v5.config.json'
+$configPath = Join-Path $root 'builder.config.json'
 if (-not (Test-Path $configPath)) { throw "Missing builder manifest: $configPath" }
 
 $config = Get-Content $configPath -Raw | ConvertFrom-Json

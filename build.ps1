@@ -37,5 +37,5 @@ if ($CleanReports) {
     exit $LASTEXITCODE
 }
 
-& pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $root 'builder-v5.ps1') -Configuration $Configuration
+& pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $root 'builder.ps1') -Configuration $Configuration
 exit $LASTEXITCODE

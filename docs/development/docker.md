@@ -39,4 +39,4 @@ At minimum, Event app development usually needs:
 
 ## Next Cleanup
 
-Bring the original `docker/docker-compose.yml`, SQL bootstrap scripts, and app-specific startup scripts into this standard, then wire them into builder-v5 as system scripts.
+Bring the original `docker/docker-compose.yml`, SQL bootstrap scripts, and app-specific startup scripts into this standard, then wire them into builder as system scripts.

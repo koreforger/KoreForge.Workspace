@@ -16,11 +16,11 @@ Every buildable repo should expose these scripts where applicable:
 | `scr/release-nuget-from-local.ps1` | Publish a local NuGet package. |
 | `scr/release-nuget-from-github.ps1` | Tag/push and let GitHub publish. |
 
-## builder-v5
+## Builder
 
-`builder-v5.ps1` is the front door. It discovers workspace-level scripts and per-repo scripts, runs selected actions, captures logs, and offers to open test/coverage/stress reports.
+`builder.ps1` is the front door. It discovers workspace-level scripts and per-repo scripts, runs selected actions, captures logs, and offers to open test/coverage/stress reports.
 
-`build.ps1` is the simple command-line front door. It launches `builder-v5.ps1` by default and also exposes artifact cleanup switches.
+`build.ps1` is the simple command-line front door. It launches `builder.ps1` by default and also exposes artifact cleanup switches.
 
 ## Artifact Policy
 

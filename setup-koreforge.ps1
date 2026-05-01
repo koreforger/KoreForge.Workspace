@@ -1,5 +1,5 @@
 #Requires -Version 7.2
-<#+
+<#
 .SYNOPSIS
     Sets up a KoreForge workspace clone.
 
@@ -44,7 +44,7 @@ $localFolders = @(
 
 New-Item -ItemType Directory -Path $localFolders -Force | Out-Null
 
-$configPath = Join-Path $rootPath 'builder-v5.config.json'
+$configPath = Join-Path $rootPath 'builder.config.json'
 if (-not (Test-Path $configPath)) {
     throw "Missing builder manifest: $configPath"
 }
@@ -69,4 +69,4 @@ if ($CloneMissing) {
 Write-Host "KoreForge workspace ready: $rootPath" -ForegroundColor Green
 Write-Host "Artifacts root : $((Join-Path $rootPath 'artifacts'))" -ForegroundColor Cyan
 Write-Host "Local NuGet feed: $((Join-Path $rootPath 'artifacts/packages'))" -ForegroundColor Cyan
-Write-Host "Run .\builder-v5.ps1 to build, test, pack, or release repos." -ForegroundColor Cyan
+Write-Host "Run .\builder.ps1 to build, test, pack, or release repos." -ForegroundColor Cyan

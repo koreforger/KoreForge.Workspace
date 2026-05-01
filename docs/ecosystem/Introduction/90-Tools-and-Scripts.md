@@ -166,7 +166,7 @@ These scripts exist in every library repository's `scr/` folder. Replace `{Solut
 
 **SYNOPSIS**
 ```powershell
-.\bin\github-set-nuget-secret.ps1 [-ApiKey <String>]
+.\scr\github-set-nuget-secret.ps1 [-ApiKey <String>]
 ```
 
 **PARAMETERS**
@@ -199,7 +199,7 @@ Located in the top-level `scr/` directory.
 | `-Version` | Yes | Version to stamp on all packages (e.g. `0.0.6-alpha`) |
 
 **DESCRIPTION**
-    Iterates all library repositories in dependency order (leaves first), runs `dotnet pack` with the specified version override, then packs template repos separately. Produces `.nupkg` files in each repo's `artifacts/` directory.
+    Iterates all library repositories in dependency order (leaves first), runs `dotnet pack` with the specified version override, then packs template repos separately. Produces feed-ready `.nupkg` files under the workspace `artifacts/packages` directory.
 
 **Dependency Order:**
 KoreForge.Time → KoreForge.Json → KoreForge.Data → KoreForge.OData → KoreForge.Logging → KoreForge.Logging.Serilog → KoreForge.Jex → KoreForge.AppLifecycle → KoreForge.Metrics → KoreForge.Metrics.AspNet → KoreForge.Processing → KoreForge.Settings → KoreForge.Web → KoreForge.Kafka → KoreForge.Templates
@@ -284,7 +284,7 @@ Removes locally-installed template packages.
 
 ### pack.ps1
 
-Packs the templates into `artifacts/KoreForge.Templates.<version>.nupkg`.
+Packs templates through the workspace artifact policy. Package output belongs under `artifacts/packages` or repo-specific staging under `artifacts/repos/<repo>`.
 
 ---
 

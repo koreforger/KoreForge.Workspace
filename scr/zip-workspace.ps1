@@ -9,7 +9,7 @@
     workspace root.  The following folders are removed:
         obj/        TestResults/    artifacts/      coverage-report/    .vs/
 
-    Compiled-output scr/ folders inside src/ and tst/ project trees are also
+    Compiled-output bin/ folders inside src/ and tst/ project trees are also
     removed.  The root-level scr/ folder of each repository is NEVER deleted
     (it contains automation scripts, not build outputs).
 
@@ -92,8 +92,8 @@ if (-not $SkipClean) {
             }
         }
 
-        # Remove compiled-output scr/ folders recursively.
-        # Protect root-level scr/ only if it contains scripts (automation folders).
+        # Remove compiled-output bin/ folders recursively.
+        # Protect root-level bin/ only if it contains scripts (automation folders).
         $binCandidates = Get-ChildItem -Path $repo.FullName -Recurse -Directory `
                              -Filter 'bin' -ErrorAction SilentlyContinue
         foreach ($dir in $binCandidates) {

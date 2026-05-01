@@ -1,7 +1,7 @@
 #Requires -Version 7.2
 <#
 .SYNOPSIS
-    KoreForge interactive script runner — v5.
+    KoreForge interactive script runner.
 
 .DESCRIPTION
     Presents a console GUI menu of all runnable scripts found across every

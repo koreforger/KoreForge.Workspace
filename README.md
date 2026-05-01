@@ -39,7 +39,7 @@ The setup script verifies required tools, creates local folders, checks out miss
 Run the script runner from the workspace root:
 
 ```powershell
-.\builder-v5.ps1
+.\builder.ps1
 ```
 
 Use it to select any repo's `Clean`, `Rebuild`, `Test`, `Coverage`, `Integration`, `Benchmark`, or `Pack` action. Logs are written under `artifacts/script-runner/logs`.
@@ -67,6 +67,10 @@ Use `1.0.1-alpha`, then increment the final number for repeated publishing tests
 
 ## Important Documentation
 
+- [Documentation home](docs/README.md)
+- [Documentation standard](docs/ecosystem/documentation-standard.md)
+- [Documentation inventory](docs/ecosystem/documentation-inventory.md)
+- [Skills catalog](docs/skills/README.md)
 - [Ecosystem layout](docs/ecosystem/layout.md)
 - [Naming standard](docs/ecosystem/naming.md)
 - [Build and release workflow](docs/ecosystem/build-and-release.md)
