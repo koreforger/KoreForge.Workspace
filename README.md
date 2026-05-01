@@ -67,6 +67,7 @@ Use `1.0.1-alpha`, then increment the final number for repeated publishing tests
 
 ## Important Documentation
 
+- [Copilot workspace instructions](.github/copilot-instructions.md)
 - [Documentation home](docs/README.md)
 - [Documentation standard](docs/ecosystem/documentation-standard.md)
 - [Documentation inventory](docs/ecosystem/documentation-inventory.md)

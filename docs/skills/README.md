@@ -2,21 +2,21 @@
 
 These skills are workflow playbooks for humans and LLMs working in the KoreForge ecosystem. A skill is more than a command list: it names the goal, the repo context to inspect, the steps to perform, and the checks that prove the work is done.
 
+Copilot-wide workspace rules live in `.github/copilot-instructions.md`. Concrete on-demand skill files live under `.github/skills/<skill-name>/SKILL.md`.
+
 ## Skill List
 
-| Skill | Use when | Primary references |
+| Skill | Use when | Skill file |
 | --- | --- | --- |
-| Workspace orientation | Entering the workspace, finding repos, or explaining ownership boundaries. | `README.md`, `docs/ecosystem/layout.md`, `docs/ecosystem/naming.md` |
-| Package-only local development | Changing a package and validating consumers without project references. | `NuGet.config`, `scr/pack-local-feed.ps1`, `docs/ecosystem/build-and-release.md` |
-| Add a KoreForge package repo | Creating a new `KoreForge.*` runtime package. | `packages/`, `docs/ecosystem/documentation-standard.md`, existing `scr/koreforge-build.psm1` |
-| Renovate or rename a package repo | Retiring legacy `KF.*` names, updating projects, namespaces, packages, tests, and docs. | `docs/ecosystem/naming.md`, `docs/ecosystem/build-and-release.md` |
-| Configure repo scripts for builder | Adding or repairing repo `scr/*.ps1` scripts so the workspace runner discovers them. | `builder.ps1`, `docs/ecosystem/Introduction/90-Tools-and-Scripts.md` |
-| Use KoreForge templates | Installing, testing, or extending `dotnet new` templates. | `packages/KoreForge.Templates`, `docs/ecosystem/Introduction/53-Templates.md` |
-| Add Event integration or stress tests | Adding realistic Event app validation against Kafka, SQL, and KoreForge packages. | `event/`, Event repo `scr/`, Docker docs |
-| Coordinate package release | Packing all packages at one version and publishing from local or GitHub flows. | `scr/pack-all.ps1`, `scr/release-nuget-from-local.ps1`, `docs/ecosystem/build-and-release.md` |
-| Maintain artifact discipline | Ensuring every generated file lands under root `artifacts/`. | `build.ps1`, `scr/clean-artifacts.ps1`, repo `scr/koreforge-build.psm1` |
-| Maintain documentation | Classifying, renaming, and indexing docs according to the standard types. | `docs/README.md`, `docs/ecosystem/documentation-standard.md`, `docs/ecosystem/documentation-inventory.md` |
-| Docker development infrastructure | Starting, resetting, and diagnosing local infrastructure. | `scr/docker-*.ps1`, `docs/development/docker.md`, `docker/docker-compose.yml` |
+| Package-only local development | Changing a package and validating consumers without project references or vendored source. | `.github/skills/koreforge-package-development/SKILL.md` |
+| Add a new project or repo | Creating a new package, tool, npm package, or Event app and wiring it into the workspace. | `.github/skills/koreforge-new-project/SKILL.md` |
+| Renovate or rename a package repo | Retiring legacy `KF.*` names, updating projects, namespaces, packages, tests, and docs. | `.github/skills/koreforge-repo-renovation/SKILL.md` |
+| Configure repo scripts for builder | Adding or repairing repo `scr/*.ps1` scripts so the workspace runner discovers them. | `.github/skills/koreforge-builder-scripts/SKILL.md` |
+| Use KoreForge templates | Installing, testing, or extending `dotnet new` templates. | `.github/skills/koreforge-template-authoring/SKILL.md` |
+| Add Event integration or stress tests | Adding realistic Event app validation against Kafka, SQL, and KoreForge packages. | `.github/skills/event-integration-testing/SKILL.md` |
+| Coordinate package release | Packing all packages at one version and publishing from local or GitHub flows. | `.github/skills/koreforge-release/SKILL.md` |
+| Maintain documentation | Classifying, renaming, and indexing docs according to the standard types. | `.github/skills/koreforge-docs-standard/SKILL.md` |
+| Docker development infrastructure | Starting, resetting, and diagnosing local infrastructure. | `.github/skills/koreforge-docker-infra/SKILL.md` |
 
 ## Skill Shape
 
@@ -31,11 +31,12 @@ Each skill should answer these questions:
 
 ## Candidate Workspace Skills
 
-These are good candidates for future `.github/skills/<name>/SKILL.md` files if we want LLMs to load them on demand:
+These are implemented under `.github/skills/<name>/SKILL.md` so LLMs can load them on demand:
 
 | Candidate skill | Trigger phrases |
 | --- | --- |
 | `koreforge-package-development` | package-only development, local feed, pack consumer, no ProjectReference |
+| `koreforge-new-project` | add project, configure repo, builder.config.json, new package, new Event app |
 | `koreforge-repo-renovation` | rename namespace, retire KF, renovate package, update csproj/slnx |
 | `koreforge-builder-scripts` | add script to builder, script discovery, build-test, build-pack |
 | `koreforge-template-authoring` | dotnet template, template package, sample exclusion |
