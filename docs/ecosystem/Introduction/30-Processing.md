@@ -124,11 +124,11 @@ public class ValidateCartStage : IFlowStage<CheckoutContext>
 
 | Assembly | Contains |
 |----------|---------|
-| `KF.Processing.Pipeline.dll` | Pipeline builder and execution |
-| `KF.Processing.Pipeline.Abstractions.dll` | `IPipelineStep`, `IPipelineContext` |
-| `KF.Processing.Flow.dll` | Flow builder and execution |
-| `KF.Processing.Flow.Abstractions.dll` | `IFlowStage`, `IFlowContext` |
-| `KF.Processing.Pipelines.dll` | Built-in compound types |
+| `KoreForge.Processing.Pipeline.dll` | Pipeline builder and execution |
+| `KoreForge.Processing.Pipeline.Abstractions.dll` | `IPipelineStep`, `IPipelineContext` |
+| `KoreForge.Processing.Flow.dll` | Flow builder and execution |
+| `KoreForge.Processing.Flow.Abstractions.dll` | `IFlowStage`, `IFlowContext` |
+| `KoreForge.Processing.Pipelines.dll` | Built-in compound types |
 
 ## Pipeline vs Flow — Decision Guide
 

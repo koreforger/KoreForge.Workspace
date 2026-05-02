@@ -1,9 +1,9 @@
-# KF.Jex.VSCode — VS Code Extension
+# KoreForge.Jex.VSCode — VS Code Extension
 
 | | |
 |---|---|
-| **Extension** | `KF.Jex.VSCode` |
-| **Source** | `KF.Jex.VSCode/` |
+| **Extension** | `KoreForge.Jex.VSCode` |
+| **Source** | `KoreForge.Jex.VSCode/` |
 | **Marketplace** | (not yet published) |
 | **Requirements** | VS Code 1.85+, .NET 10 Runtime |
 
@@ -25,7 +25,7 @@ The VS Code extension provides full language support for `.jex` files: syntax hi
 Install from the VS Code Extensions marketplace or from a `.vsix` file:
 
 ```bash
-code --install-extension kf-jex-vscode-0.0.1.vsix
+code --install-extension koreforge-jex-vscode-0.0.1.vsix
 ```
 
 ## Features

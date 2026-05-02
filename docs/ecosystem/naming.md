@@ -1,6 +1,6 @@
 # Naming Standard
 
-KoreForge uses the public name everywhere. The short `KF.*` form is legacy only and should not be used for new folders, projects, assemblies, namespaces, packages, scripts, or documentation.
+KoreForge uses the public name everywhere. The short `KoreForge.*` form is legacy only and should not be used for new folders, projects, assemblies, namespaces, packages, scripts, or documentation.
 
 ## KoreForge Assets
 
@@ -45,4 +45,4 @@ Projects do not use `ProjectReference`. Cross-repo and cross-project dependencie
 
 ## Legacy Names
 
-Existing `KF.*` names are transitional debt. When touched for renovation, rename the project, assembly, namespace, package ID, and documentation together so mixed identity does not leak into new code.
+Existing `KoreForge.*` names are transitional debt. When touched for renovation, rename the project, assembly, namespace, package ID, and documentation together so mixed identity does not leak into new code.

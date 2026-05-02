@@ -315,7 +315,7 @@ GO
 -- Function definitions (global plan)
 IF OBJECT_ID('EventReader.Function', 'U') IS NULL
 BEGIN
-    CREATE TABLE EventReader.Function
+    CREATE TABLE EventReader.[Function]
     (
         FunctionId              INT           NOT NULL PRIMARY KEY,
         FunctionVersion         BIGINT        NOT NULL,
@@ -344,7 +344,7 @@ BEGIN
     CREATE TABLE EventReader.FunctionRule
     (
         FunctionId  INT           NOT NULL
-            REFERENCES EventReader.Function(FunctionId) ON DELETE CASCADE,
+            REFERENCES EventReader.[Function](FunctionId) ON DELETE CASCADE,
         RuleId      INT           NOT NULL,
         RuleVersion BIGINT        NOT NULL,
         RuleName    NVARCHAR(200) NOT NULL,
@@ -362,7 +362,7 @@ BEGIN
         FunctionMatcherId INT           NOT NULL IDENTITY PRIMARY KEY,
         SourceSystemId    NVARCHAR(100) NULL,
         FunctionId        INT           NOT NULL
-            REFERENCES EventReader.Function(FunctionId) ON DELETE CASCADE,
+            REFERENCES EventReader.[Function](FunctionId) ON DELETE CASCADE,
         Priority          INT           NOT NULL DEFAULT(100),
         Prefix            NVARCHAR(100) NOT NULL,
         RegexPattern      NVARCHAR(1000) NOT NULL
@@ -380,7 +380,7 @@ BEGIN
     CREATE TABLE EventReader.FunctionSourceOverride
     (
         FunctionId               INT           NOT NULL
-            REFERENCES EventReader.Function(FunctionId) ON DELETE CASCADE,
+            REFERENCES EventReader.[Function](FunctionId) ON DELETE CASCADE,
         SourceSystemId           NVARCHAR(100) NOT NULL
             REFERENCES EventReader.SourceSystem(SourceSystemId),
         ScriptName               NVARCHAR(200) NOT NULL DEFAULT(''),

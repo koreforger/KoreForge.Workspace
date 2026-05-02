@@ -1,6 +1,6 @@
 # KoreForge.Metrics — API Reference
 
-**Package**: `KoreForge.Metrics`  |  **Assembly**: `KF.Metrics.dll`  |  **Namespace**: `KoreForge.Metrics`
+**Package**: `KoreForge.Metrics`  |  **Assembly**: `KoreForge.Metrics.dll`  |  **Namespace**: `KoreForge.Metrics`
 
 ---
 

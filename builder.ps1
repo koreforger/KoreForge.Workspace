@@ -59,13 +59,19 @@ Import-Module $moduleName -ErrorAction Stop
 # Standard repo actions — fixed script names matched per repo
 # ---------------------------------------------------------------------------
 $standardActions = @(
-    [pscustomobject]@{ Action = "Clean";                  Order = 10;  Script = "build-clean.ps1" }
-    [pscustomobject]@{ Action = "Rebuild";                Order = 20;  Script = "build-rebuild.ps1" }
-    [pscustomobject]@{ Action = "Test";                   Order = 30;  Script = "build-test.ps1" }
-    [pscustomobject]@{ Action = "Coverage";               Order = 40;  Script = "build-test-codecoverage.ps1" }
-    [pscustomobject]@{ Action = "Integration";            Order = 50;  Script = "build-integration.ps1" }
-    [pscustomobject]@{ Action = "Benchmark";              Order = 60;  Script = "build-benchmark.ps1" }
-    [pscustomobject]@{ Action = "Pack";                   Order = 70;  Script = "build-pack.ps1" }
+    [pscustomobject]@{ Action = "Clean";       Order = 10; Script = "build-clean.ps1";             Description = "Clean this repository's build and artifact outputs." }
+    [pscustomobject]@{ Action = "Rebuild";     Order = 20; Script = "build-rebuild.ps1";           Description = "Restore and rebuild this repository from a clean state." }
+    [pscustomobject]@{ Action = "Test";        Order = 30; Script = "build-test.ps1";              Description = "Build and run this repository's unit tests." }
+    [pscustomobject]@{ Action = "Coverage";    Order = 40; Script = "build-test-codecoverage.ps1"; Description = "Run tests and generate a coverage report." }
+    [pscustomobject]@{ Action = "Integration"; Order = 50; Script = "build-integration.ps1";       Description = "Run integration tests for this repository." }
+    [pscustomobject]@{ Action = "Benchmark";   Order = 60; Script = "build-benchmark.ps1";         Description = "Run benchmark workloads for this repository." }
+    [pscustomobject]@{ Action = "Pack";        Order = 70; Script = "build-pack.ps1";              Description = "Pack this repository's publishable artifacts." }
+)
+
+$systemActionMetadata = @(
+    [pscustomobject]@{ Action = "Build";   Order = 1; Script = "pack-local-feed.ps1";    Description = "Build all publishable projects and refresh the local NuGet feed." }
+    [pscustomobject]@{ Action = "Clean";   Order = 2; Script = "clean-artifacts.ps1";    Description = "Remove workspace generated artifacts." }
+    [pscustomobject]@{ Action = "Rebuild"; Order = 3; Script = "rebuild-local-feed.ps1"; Description = "Clean generated artifacts, then rebuild the local NuGet feed." }
 )
 
 # ---------------------------------------------------------------------------
@@ -80,9 +86,26 @@ function Get-SystemScriptActions {
     $scrPath = Join-Path $RootPath "scr"
     if (-not (Test-Path $scrPath)) { return }
 
-    $order = 1
+        foreach ($metadata in $systemActionMetadata) {
+                $scriptPath = Join-Path $scrPath $metadata.Script
+                if (-not (Test-Path $scriptPath)) { continue }
+
+                [pscustomobject]@{
+                        Repo        = "── SYSTEM ──"
+                        Action      = $metadata.Action
+                        Description = $metadata.Description
+                        Order       = $metadata.Order
+                        Script      = "scr\$($metadata.Script)"
+                        RepoPath    = $RootPath
+                        ScriptPath  = $scriptPath
+                }
+        }
+
+        $reservedScripts = @($systemActionMetadata.Script)
+        $order = 100
 
     @(Get-ChildItem -Path $scrPath -Filter "*.ps1" -File -ErrorAction SilentlyContinue |
+            Where-Object { $_.Name -notin $reservedScripts } |
       Sort-Object Name) |
     ForEach-Object {
         # release-nuget-from-local.ps1 → "Release Nuget From Local"
@@ -90,15 +113,39 @@ function Get-SystemScriptActions {
         $displayName = (Get-Culture).TextInfo.ToTitleCase($baseName)
 
         [pscustomobject]@{
-            Repo       = "── SYSTEM ──"
-            Action     = $displayName
-            Order      = $order
-            Script     = "scr\$($_.Name)"
-            RepoPath   = $RootPath
-            ScriptPath = $_.FullName
+            Repo        = "── SYSTEM ──"
+            Action      = $displayName
+            Description = Get-SystemScriptDescription -ScriptName $_.Name -DisplayName $displayName
+            Order       = $order
+            Script      = "scr\$($_.Name)"
+            RepoPath    = $RootPath
+            ScriptPath  = $_.FullName
         }
 
         $order++
+    }
+}
+
+function Get-SystemScriptDescription {
+    param(
+        [Parameter(Mandatory)] [string] $ScriptName,
+        [Parameter(Mandatory)] [string] $DisplayName
+    )
+
+    switch ($ScriptName) {
+        "clean-artifact-packages.ps1" { "Remove local package feed and package staging artifacts."; break }
+        "clean-artifact-reports.ps1"  { "Remove generated reports while preserving build/package outputs."; break }
+        "create-all-repos.ps1"        { "Create or initialize configured child repositories."; break }
+        "docker-down.ps1"             { "Stop the workspace Docker development infrastructure."; break }
+        "docker-reset.ps1"            { "Reset workspace Docker services and generated container state."; break }
+        "docker-status.ps1"           { "Show Docker infrastructure readiness and service status."; break }
+        "docker-up.ps1"               { "Start Docker infrastructure and run readiness checks."; break }
+        "pack-all.ps1"                { "Pack all library repositories using the legacy pack-all workflow."; break }
+        "release-nuget-from-github.ps1" { "Tag and push a NuGet release through GitHub automation."; break }
+        "release-nuget-from-local.ps1"  { "Publish NuGet packages from the local artifact feed."; break }
+        "zip-compact-workspace.ps1"   { "Create a compact workspace archive under artifacts/zips."; break }
+        "zip-workspace.ps1"           { "Create a full workspace archive under artifacts/zips."; break }
+        default                        { "Run workspace script: $DisplayName." }
     }
 }
 
@@ -164,12 +211,13 @@ function Get-AvailableScriptActions {
             $scriptPath = Join-Path $repo.FullName (Join-Path "scr" $action.Script)
             if (Test-Path $scriptPath) {
                 [pscustomobject]@{
-                    Repo       = $repo.Name
-                    Action     = $action.Action
-                    Order      = $repoOrderBase + $action.Order
-                    Script     = "scr\$($action.Script)"
-                    RepoPath   = $repo.FullName
-                    ScriptPath = $scriptPath
+                    Repo        = $repo.Name
+                    Action      = $action.Action
+                    Description = $action.Description
+                    Order       = $repoOrderBase + $action.Order
+                    Script      = "scr\$($action.Script)"
+                    RepoPath    = $repo.FullName
+                    ScriptPath  = $scriptPath
                 }
             }
         }
@@ -202,12 +250,13 @@ function Get-StressScriptActions {
             $displayName = "Stress: $($words -join ' ')"
 
             [pscustomobject]@{
-                Repo       = $repo.Name
-                Action     = $displayName
-                Order      = $order
-                Script     = "scr\$($script.Name)"
-                RepoPath   = $repo.FullName
-                ScriptPath = $script.FullName
+                Repo        = $repo.Name
+                Action      = $displayName
+                Description = "Run stress workload '$($words -join ' ')'."
+                Order       = $order
+                Script      = "scr\$($script.Name)"
+                RepoPath    = $repo.FullName
+                ScriptPath  = $script.FullName
             }
 
             $order++
@@ -258,7 +307,7 @@ function Find-ReportFiles {
     $files = [System.Collections.Generic.List[object]]::new()
 
     $repoName = Split-Path $RepoPath -Leaf
-    $artifactRoot = $env:KFO_ARTIFACTS_ROOT
+    $artifactRoot = $env:KOREFORGE_ARTIFACTS_ROOT
 
     $candidateRoots = @(
         $(if ($artifactRoot) { Join-Path $artifactRoot (Join-Path "repos" $repoName) }),
@@ -525,8 +574,9 @@ function Show-ReportOutputs {
 # ---------------------------------------------------------------------------
 $rootPath = (Resolve-Path $Root).Path
 $artifactRoot = Join-Path $rootPath "artifacts"
-$env:KFO_WORKSPACE_ROOT = $rootPath
-$env:KFO_ARTIFACTS_ROOT = $artifactRoot
+$env:KOREFORGE_WORKSPACE_ROOT = $rootPath
+$env:KOREFORGE_ARTIFACTS_ROOT = $artifactRoot
+$env:NO_COLOR = '1'   # suppress ANSI sequences in child process stdout/stderr (log files)
 $selectedConfiguration = Read-ConfigurationChoice -DefaultConfiguration $Configuration
 
 Write-Host "Root         : $rootPath"              -ForegroundColor Cyan
@@ -557,7 +607,7 @@ if ($availableActions.Count -eq 0) {
 }
 
 $selected = $availableActions |
-    Select-Object Repo, Action, Order, Script, RepoPath, ScriptPath |
+    Select-Object Repo, Action, Description, Order, Script, RepoPath, ScriptPath |
     Out-ConsoleGridView -OutputMode Multiple -Title "KoreForge Script Runner v5 — select scripts to run (SPACE to multi-select)"
 
 if (-not $selected -or $selected.Count -eq 0) {

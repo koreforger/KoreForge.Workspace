@@ -14,8 +14,8 @@ The core philosophy is simple: **if a problem has been solved, it stays solved.*
 A single monolithic library would force you to take everything or nothing. KoreForge is deliberately structured as independent packages that can be adopted individually or together:
 
 - **Need just a clock abstraction?** Install `KoreForge.Time` — nothing else comes with it.
-- **Need Kafka consumers with observability?** Install `KF.Kafka` — it pulls in metrics and logging automatically.
-- **Building a full application?** Use `dotnet new kf-kafka-processor` to scaffold an entire solution with all conventions pre-applied.
+- **Need Kafka consumers with observability?** Install `KoreForge.Kafka` — it pulls in metrics and logging automatically.
+- **Building a full application?** Use `dotnet new koreforge-kafka-processor` to scaffold an entire solution with all conventions pre-applied.
 
 Each package has minimal dependencies, clear boundaries, and its own release cycle.
 
@@ -59,7 +59,7 @@ Scaffold a complete application:
 
 ```bash
 dotnet new install KoreForge.Templates
-dotnet new kf-kafka-processor -n MyApp --KafkaTopic orders
+dotnet new koreforge-kafka-processor -n MyApp --KafkaTopic orders
 ```
 
 ## Package Inventory

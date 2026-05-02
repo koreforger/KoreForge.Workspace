@@ -84,8 +84,8 @@ The monitoring framework owns HTTP exposure. The application owns its data.
 
 | Package / App | Responsibility |
 |---|---|
-| `KF.Jex.Vue` | npm package. `JexScriptPanel`, `JexEditorPanel`, `JexTestPanel`. Reusable wherever Jex scripts are exposed. |
-| `KF.Kafka.Vue` | npm package. `KafkaConsumerPanel`, `KafkaLagPanel`. |
+| `KoreForge.Jex.Vue` | npm package. `JexScriptPanel`, `JexEditorPanel`, `JexTestPanel`. Reusable wherever Jex scripts are exposed. |
+| `KoreForge.Kafka.Vue` | npm package. `KafkaConsumerPanel`, `KafkaLagPanel`. |
 | `KoreForge.Monitoring.Shell` | The application. Composes all packages, renders pipeline, hosts capability panels. |
 | `EventReader.Vue` | EventReader-specific Vue components not belonging to any reusable package. `DurableBacklogPanel`, `RuntimeModelPanel`, `ShardWorkerPanel`. |
 
@@ -552,10 +552,10 @@ import GenericMetricPanel       from '@/components/panels/GenericMetricPanel.vue
 import PipelineDiagram          from '@/components/pipeline/PipelineDiagram.vue'
 import HealthPanel              from '@/components/panels/HealthPanel.vue'
 
-// KF.Jex.Vue package
+// KoreForge.Jex.Vue package
 import { JexScriptPanel, JexEditorPanel } from '@koreforge/jex-vue'
 
-// KF.Kafka.Vue package
+// KoreForge.Kafka.Vue package
 import { KafkaConsumerPanel } from '@koreforge/kafka-vue'
 
 // EventReader-specific
@@ -726,7 +726,7 @@ Backend endpoint: `GET /monitoring/runtime-model`
 }
 ```
 
-### 7.3 JexScriptPanel (from KF.Jex.Vue)
+### 7.3 JexScriptPanel (from KoreForge.Jex.Vue)
 
 Reusable panel for any application that uses Jex. Configured via the capability's `config` object:
 
@@ -771,7 +771,7 @@ Backend endpoint: `GET /monitoring/shard-workers`
 
 ---
 
-## 8. KF.Jex.Vue Package Design
+## 8. KoreForge.Jex.Vue Package Design
 
 ### 8.1 Components exported
 
@@ -961,7 +961,7 @@ export interface HealthChangedDto {
 
 15. Implement `CapabilityPanelHost`. Build `GenericMetricPanel` fallback.
 16. Implement `DurableBacklogPanel` and `RuntimeModelPanel` for EventReader.
-17. Implement `JexScriptPanel` and `JexEditorPanel` in `KF.Jex.Vue`.
+17. Implement `JexScriptPanel` and `JexEditorPanel` in `KoreForge.Jex.Vue`.
 18. Register all components. Connect backend endpoints.
 
 ### Phase 6: Polish and ops
@@ -985,4 +985,4 @@ export interface HealthChangedDto {
 | Build-time component registry | Simpler than runtime plugin loading. Unknown keys get generic card. Ships in one bundle. |
 | SignalR over polling | Already in use for shadow test results. Consistent approach. Lower latency than polling for live rates. |
 | Snapshot + delta hybrid | Snapshot on connect ensures consistent initial state. Deltas keep it fresh. Periodic re-snapshot corrects drift. |
-| KF.Jex.Vue as npm package | Script editor is reusable beyond EventReader. Any app can register `JexScriptPanel` via its manifest. |
+| KoreForge.Jex.Vue as npm package | Script editor is reusable beyond EventReader. Any app can register `JexScriptPanel` via its manifest. |

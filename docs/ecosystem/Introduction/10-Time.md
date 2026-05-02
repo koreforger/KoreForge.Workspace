@@ -3,9 +3,9 @@
 | | |
 |---|---|
 | **Package** | `KoreForge.Time` |
-| **Namespace** | `KF.Time` |
-| **Source** | `KoreForge.Time/src/KF.Time/` |
-| **Tests** | `KoreForge.Time/tst/KF.Time.Tests/` |
+| **Namespace** | `KoreForge.Time` |
+| **Source** | `KoreForge.Time/src/KoreForge.Time/` |
+| **Tests** | `KoreForge.Time/tst/KoreForge.Time.Tests/` |
 | **Dependencies** | None |
 
 ## Problem

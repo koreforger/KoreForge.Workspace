@@ -6,12 +6,12 @@ Multi-assembly package:
 
 | Assembly | Namespace | Contents |
 |----------|-----------|----------|
-| `KF.Kafka.Consumer.dll` | `KoreForge.Kafka.Consumer` | `KafkaConsumerHost`, `IKafkaBatchProcessor` |
-| `KF.Kafka.Producer.dll` | `KoreForge.Kafka.Producer` | `KafkaProducerHost`, `IProducerBuffer` |
-| `KF.Kafka.AdminClient.dll` | `KoreForge.Kafka.AdminClient` | `KafkaAdminClient` |
-| `KF.Kafka.Pipeline.dll` | `KoreForge.Kafka.Pipeline` | `KafkaPipelineProcessorBuilder` |
-| `KF.Kafka.Configuration.dll` | `KoreForge.Kafka.Configuration` | Options, policy types |
-| `KF.Kafka.Abstractions.dll` | `KoreForge.Kafka.Abstractions` | Shared interfaces |
+| `KoreForge.Kafka.Consumer.dll` | `KoreForge.Kafka.Consumer` | `KafkaConsumerHost`, `IKafkaBatchProcessor` |
+| `KoreForge.Kafka.Producer.dll` | `KoreForge.Kafka.Producer` | `KafkaProducerHost`, `IProducerBuffer` |
+| `KoreForge.Kafka.AdminClient.dll` | `KoreForge.Kafka.AdminClient` | `KafkaAdminClient` |
+| `KoreForge.Kafka.Pipeline.dll` | `KoreForge.Kafka.Pipeline` | `KafkaPipelineProcessorBuilder` |
+| `KoreForge.Kafka.Configuration.dll` | `KoreForge.Kafka.Configuration` | Options, policy types |
+| `KoreForge.Kafka.Abstractions.dll` | `KoreForge.Kafka.Abstractions` | Shared interfaces |
 
 ---
 

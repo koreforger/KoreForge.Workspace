@@ -4,8 +4,8 @@
 |---|---|
 | **Package** | `KoreForge.Jex` |
 | **Namespace** | `KoreForge.Jex` |
-| **Source** | `KoreForge.Jex/src/KF.Jex/` |
-| **Tests** | `KoreForge.Jex/tst/KF.Jex.Tests/` |
+| **Source** | `KoreForge.Jex/src/KoreForge.Jex/` |
+| **Tests** | `KoreForge.Jex/tst/KoreForge.Jex.Tests/` |
 | **Dependencies** | None |
 
 ## Problem

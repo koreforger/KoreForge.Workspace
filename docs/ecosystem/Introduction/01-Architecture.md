@@ -128,8 +128,8 @@ KoreForge.{Library}/
 ├── LICENSE.md
 ├── scr/                         # PowerShell automation scripts
 ├── doc/                         # Specifications, guides
-├── src/KF.{Lib}/                # Source project(s)
-└── tst/KF.{Lib}.Tests/          # Test project(s)
+├── src/KoreForge.{Lib}/                # Source project(s)
+└── tst/KoreForge.{Lib}.Tests/          # Test project(s)
 ```
 
 ## Naming Conventions
@@ -138,8 +138,8 @@ KoreForge.{Library}/
 |---------|---------|---------|
 | Repository folder | `KoreForge.{Area}` | `KoreForge.Kafka` |
 | NuGet package ID | `KoreForge.{Area}` | `KoreForge.Kafka` |
-| Source project | `KF.{Area}` | `KF.Kafka.Consumer` |
-| Test project | `KF.{Area}.Tests` | `KF.Kafka.Tests` |
+| Source project | `KoreForge.{Area}` | `KoreForge.Kafka.Consumer` |
+| Test project | `KoreForge.{Area}.Tests` | `KoreForge.Kafka.Tests` |
 | DI extension class | `{Area}ServiceCollectionExtensions` | `KafkaServiceCollectionExtensions` |
 | Options class | `{Area}Options` | `KafkaConsumerOptions` |
 

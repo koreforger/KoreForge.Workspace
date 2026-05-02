@@ -20,8 +20,8 @@ The core philosophy is simple: **if a problem has been solved, it stays solved.*
 A single monolithic library would force you to take everything or nothing. KoreForge is deliberately structured as independent packages that can be adopted individually or together:
 
 - **Need just a clock abstraction?** Install `KoreForge.Time` — nothing else comes with it.
-- **Need Kafka consumers with observability?** Install `KF.Kafka` — it pulls in metrics and logging automatically.
-- **Building a full application?** Use `dotnet new kf-kafka-processor` to scaffold an entire solution with all conventions pre-applied.
+- **Need Kafka consumers with observability?** Install `KoreForge.Kafka` — it pulls in metrics and logging automatically.
+- **Building a full application?** Use `dotnet new koreforge-kafka-processor` to scaffold an entire solution with all conventions pre-applied.
 
 Each package has minimal dependencies, clear boundaries, and its own release cycle.
 
@@ -65,7 +65,7 @@ Scaffold a complete application:
 
 ```bash
 dotnet new install KoreForge.Templates
-dotnet new kf-kafka-processor -n MyApp --KafkaTopic orders
+dotnet new koreforge-kafka-processor -n MyApp --KafkaTopic orders
 ```
 
 ## Package Inventory
@@ -232,8 +232,8 @@ KoreForge.{Library}/
 ├── LICENSE.md
 ├── scr/                         # PowerShell automation scripts
 ├── doc/                         # Specifications, guides
-├── src/KF.{Lib}/                # Source project(s)
-└── tst/KF.{Lib}.Tests/          # Test project(s)
+├── src/KoreForge.{Lib}/                # Source project(s)
+└── tst/KoreForge.{Lib}.Tests/          # Test project(s)
 ```
 
 ## Naming Conventions
@@ -242,8 +242,8 @@ KoreForge.{Library}/
 |---------|---------|---------|
 | Repository folder | `KoreForge.{Area}` | `KoreForge.Kafka` |
 | NuGet package ID | `KoreForge.{Area}` | `KoreForge.Kafka` |
-| Source project | `KF.{Area}` | `KF.Kafka.Consumer` |
-| Test project | `KF.{Area}.Tests` | `KF.Kafka.Tests` |
+| Source project | `KoreForge.{Area}` | `KoreForge.Kafka.Consumer` |
+| Test project | `KoreForge.{Area}.Tests` | `KoreForge.Kafka.Tests` |
 | DI extension class | `{Area}ServiceCollectionExtensions` | `KafkaServiceCollectionExtensions` |
 | Options class | `{Area}Options` | `KafkaConsumerOptions` |
 
@@ -264,9 +264,9 @@ KoreForge.{Library}/
 | | |
 |---|---|
 | **Package** | `KoreForge.Time` |
-| **Namespace** | `KF.Time` |
-| **Source** | `KoreForge.Time/src/KF.Time/` |
-| **Tests** | `KoreForge.Time/tst/KF.Time.Tests/` |
+| **Namespace** | `KoreForge.Time` |
+| **Source** | `KoreForge.Time/src/KoreForge.Time/` |
+| **Tests** | `KoreForge.Time/tst/KoreForge.Time.Tests/` |
 | **Dependencies** | None |
 
 ## Problem
@@ -373,8 +373,8 @@ public void IsExpired_AfterTtl_ReturnsTrue()
 |---|---|
 | **Package** | `KoreForge.Jex` |
 | **Namespace** | `KoreForge.Jex` |
-| **Source** | `KoreForge.Jex/src/KF.Jex/` |
-| **Tests** | `KoreForge.Jex/tst/KF.Jex.Tests/` |
+| **Source** | `KoreForge.Jex/src/KoreForge.Jex/` |
+| **Tests** | `KoreForge.Jex/tst/KoreForge.Jex.Tests/` |
 | **Dependencies** | None |
 
 ## Problem
@@ -496,12 +496,12 @@ string result = jex.Transform(script, input);
 
 ---
 
-# KF.Jex.Cli — JEX Command-Line Interface
+# KoreForge.Jex.Cli — JEX Command-Line Interface
 
 | | |
 |---|---|
 | **Tool** | `jex` (standalone executable) |
-| **Source** | `KF.Jex.Cli/src/` |
+| **Source** | `KoreForge.Jex.Cli/src/` |
 | **Type** | .NET tool / standalone binary |
 | **Dependencies** | KoreForge.Jex |
 
@@ -523,7 +523,7 @@ The JEX CLI is a command-line tool that executes JEX scripts directly from the t
 ### Build from source
 
 ```powershell
-cd KF.Jex.Cli
+cd KoreForge.Jex.Cli
 .\scr\build-rebuild.ps1
 ```
 
@@ -613,12 +613,12 @@ When `--meta` is provided, the metadata JSON is available in the script via `$me
 
 ---
 
-# KF.Jex.VSCode — VS Code Extension
+# KoreForge.Jex.VSCode — VS Code Extension
 
 | | |
 |---|---|
-| **Extension** | `KF.Jex.VSCode` |
-| **Source** | `KF.Jex.VSCode/` |
+| **Extension** | `KoreForge.Jex.VSCode` |
+| **Source** | `KoreForge.Jex.VSCode/` |
 | **Marketplace** | (not yet published) |
 | **Requirements** | VS Code 1.85+, .NET 10 Runtime |
 
@@ -640,7 +640,7 @@ The VS Code extension provides full language support for `.jex` files: syntax hi
 Install from the VS Code Extensions marketplace or from a `.vsix` file:
 
 ```bash
-code --install-extension kf-jex-vscode-0.0.1.vsix
+code --install-extension koreforge-jex-vscode-0.0.1.vsix
 ```
 
 ## Features
@@ -690,13 +690,13 @@ The extension follows the same input file convention as the CLI:
 
 ---
 
-# KF.Jex.LanguageServer — JEX Language Server Protocol
+# KoreForge.Jex.LanguageServer — JEX Language Server Protocol
 
 | | |
 |---|---|
-| **Package** | `KF.Jex.LanguageServer` |
-| **Source** | `KF.Jex.LanguageServer/src/` |
-| **Tests** | `KF.Jex.LanguageServer/tst/` |
+| **Package** | `KoreForge.Jex.LanguageServer` |
+| **Source** | `KoreForge.Jex.LanguageServer/src/` |
+| **Tests** | `KoreForge.Jex.LanguageServer/tst/` |
 | **Protocol** | Language Server Protocol (LSP) over stdio |
 | **Dependencies** | KoreForge.Jex, OmniSharp.Extensions.LanguageServer |
 
@@ -716,7 +716,7 @@ The JEX Language Server implements the Language Server Protocol (LSP), which is 
 ## Building
 
 ```powershell
-cd KF.Jex.LanguageServer
+cd KoreForge.Jex.LanguageServer
 .\scr\build-rebuild.ps1         # Build
 .\scr\build-test.ps1          # Run tests
 ```
@@ -724,7 +724,7 @@ cd KF.Jex.LanguageServer
 ## Architecture
 
 ```
-VS Code ←── stdio ──→ KF.Jex.LanguageServer
+VS Code ←── stdio ──→ KoreForge.Jex.LanguageServer
                            │
                            ├── TextDocumentSyncHandler (tracks open files)
                            ├── DiagnosticsHandler (syntax errors)
@@ -737,7 +737,7 @@ VS Code ←── stdio ──→ KF.Jex.LanguageServer
 For editors other than VS Code, start the language server manually:
 
 ```bash
-dotnet run --project KF.Jex.LanguageServer/src/KF.Jex.LanguageServer.csproj
+dotnet run --project KoreForge.Jex.LanguageServer/src/KoreForge.Jex.LanguageServer.csproj
 ```
 
 The server communicates over stdin/stdout using the LSP JSON-RPC protocol.
@@ -755,8 +755,8 @@ The server communicates over stdin/stdout using the LSP JSON-RPC protocol.
 |---|---|
 | **Package** | `KoreForge.Json` |
 | **Namespace** | `KoreForge.Json` |
-| **Source** | `KoreForge.Json/src/KF.Json/` |
-| **Tests** | `KoreForge.Json/tst/KF.Json.Tests/` |
+| **Source** | `KoreForge.Json/src/KoreForge.Json/` |
+| **Tests** | `KoreForge.Json/tst/KoreForge.Json.Tests/` |
 | **Dependencies** | None |
 
 ## Problem
@@ -889,8 +889,8 @@ int route = classifier.Classify(message);
 |---|---|
 | **Package** | `KoreForge.Metrics` |
 | **Namespace** | `KoreForge.Metrics` |
-| **Source** | `KoreForge.Metrics/src/KF.Metrics/` |
-| **Tests** | `KoreForge.Metrics/tst/KF.Metrics.Tests/` |
+| **Source** | `KoreForge.Metrics/src/KoreForge.Metrics/` |
+| **Tests** | `KoreForge.Metrics/tst/KoreForge.Metrics.Tests/` |
 | **Dependencies** | KoreForge.Time |
 
 ## Problem
@@ -1023,8 +1023,8 @@ public class DashboardService(IMonitoringSnapshotProvider snapshots)
 |---|---|
 | **Package** | `KoreForge.Metrics.AspNet` |
 | **Namespace** | `KoreForge.Metrics.AspNet` |
-| **Source** | `KoreForge.Metrics.AspNet/src/KF.Metrics.AspNet/` |
-| **Tests** | `KoreForge.Metrics.AspNet/tst/KF.Metrics.AspNet.Tests/` |
+| **Source** | `KoreForge.Metrics.AspNet/src/KoreForge.Metrics.AspNet/` |
+| **Tests** | `KoreForge.Metrics.AspNet/tst/KoreForge.Metrics.AspNet.Tests/` |
 | **Dependencies** | KoreForge.Metrics |
 
 ## Problem
@@ -1084,7 +1084,7 @@ No additional configuration. The endpoint path defaults to `/metrics/snapshots`.
 | **Package** | `KoreForge.Logging` |
 | **Namespace** | `KoreForge.Logging` |
 | **Source** | `KoreForge.Logging/src/` (Runtime, Generator, Analyzers) |
-| **Tests** | `KoreForge.Logging/tst/KF.Logging.Tests/` |
+| **Tests** | `KoreForge.Logging/tst/KoreForge.Logging.Tests/` |
 | **Dependencies** | KoreForge.Metrics, KoreForge.Time |
 
 ## Problem
@@ -1096,9 +1096,9 @@ Structured logging in large systems degrades into chaos. Teams invent their own 
 KoreForge.Logging uses Roslyn source generation to produce log methods from an enum hierarchy. You define your log events once as nested enums + attributes. The source generator produces strongly-typed extension methods with deterministic event IDs derived from the hierarchy. The result: every log event has a unique, discoverable, type-safe entry point.
 
 The assembly ships in three parts:
-- `KF.Logging.Runtime.dll` — runtime types and base interfaces
-- `KF.Logging.Generator.dll` (netstandard2.0) — Roslyn source generator that emits log methods at compile time
-- `KF.Logging.Analyzers.dll` — Roslyn analyzers that enforce logging conventions
+- `KoreForge.Logging.Runtime.dll` — runtime types and base interfaces
+- `KoreForge.Logging.Generator.dll` (netstandard2.0) — Roslyn source generator that emits log methods at compile time
+- `KoreForge.Logging.Analyzers.dll` — Roslyn analyzers that enforce logging conventions
 
 ## Compromises
 
@@ -1190,7 +1190,7 @@ Event IDs are deterministic, derived from the enum hierarchy position. Nested en
 |---|---|
 | **Package** | `KoreForge.Logging.Serilog` |
 | **Namespace** | `KoreForge.Logging.Serilog` |
-| **Source** | `KoreForge.Logging.Serilog/src/KF.Logging.Serilog/` |
+| **Source** | `KoreForge.Logging.Serilog/src/KoreForge.Logging.Serilog/` |
 | **Dependencies** | KoreForge.Logging, Serilog |
 
 ## Problem
@@ -1359,11 +1359,11 @@ public class ValidateCartStage : IFlowStage<CheckoutContext>
 
 | Assembly | Contains |
 |----------|---------|
-| `KF.Processing.Pipeline.dll` | Pipeline builder and execution |
-| `KF.Processing.Pipeline.Abstractions.dll` | `IPipelineStep`, `IPipelineContext` |
-| `KF.Processing.Flow.dll` | Flow builder and execution |
-| `KF.Processing.Flow.Abstractions.dll` | `IFlowStage`, `IFlowContext` |
-| `KF.Processing.Pipelines.dll` | Built-in compound types |
+| `KoreForge.Processing.Pipeline.dll` | Pipeline builder and execution |
+| `KoreForge.Processing.Pipeline.Abstractions.dll` | `IPipelineStep`, `IPipelineContext` |
+| `KoreForge.Processing.Flow.dll` | Flow builder and execution |
+| `KoreForge.Processing.Flow.Abstractions.dll` | `IFlowStage`, `IFlowContext` |
+| `KoreForge.Processing.Pipelines.dll` | Built-in compound types |
 
 ## Pipeline vs Flow — Decision Guide
 
@@ -1520,7 +1520,7 @@ public class BusinessHoursTrigger : IScheduleTrigger
 
 | | |
 |---|---|
-| **Package** | `KF.Kafka` (meta), `KF.Kafka.Consumer`, `KF.Kafka.Producer`, `KF.Kafka.AdminClient`, `KF.Kafka.Configuration`, `KF.Kafka.Configuration.AspNetCore`, `KF.Kafka.Core` |
+| **Package** | `KoreForge.Kafka` (meta), `KoreForge.Kafka.Consumer`, `KoreForge.Kafka.Producer`, `KoreForge.Kafka.AdminClient`, `KoreForge.Kafka.Configuration`, `KoreForge.Kafka.Configuration.AspNetCore`, `KoreForge.Kafka.Core` |
 | **Namespace** | `KoreForge.Kafka.*` |
 | **Source** | `KoreForge.Kafka/src/` |
 | **Tests** | `KoreForge.Kafka/tst/` |
@@ -1547,18 +1547,18 @@ KoreForge.Kafka provides a production-grade Kafka stack built on Confluent.Kafka
 
 - Requires Confluent.Kafka — not an abstraction over arbitrary message brokers.
 - Consumer uses a single-threaded partition model per consumer group. High-throughput scenarios should deploy multiple consumer instances.
-- The meta-package `KF.Kafka` pulls in all sub-packages. Use individual packages for leaner dependency trees.
+- The meta-package `KoreForge.Kafka` pulls in all sub-packages. Use individual packages for leaner dependency trees.
 
 ## Installation
 
 ```bash
 # Everything
-dotnet add package KF.Kafka
+dotnet add package KoreForge.Kafka
 
 # Or pick what you need
-dotnet add package KF.Kafka.Consumer
-dotnet add package KF.Kafka.Producer
-dotnet add package KF.Kafka.AdminClient
+dotnet add package KoreForge.Kafka.Consumer
+dotnet add package KoreForge.Kafka.Producer
+dotnet add package KoreForge.Kafka.AdminClient
 ```
 
 ## Configuration
@@ -1650,13 +1650,13 @@ public class LagMonitor(IKafkaAdminClient admin)
 
 | Package | Description |
 |---|---|
-| `KF.Kafka` | Meta-package — installs all components below |
-| `KF.Kafka.AdminClient` | Read-only admin: topic metadata, consumer-lag, offsets-for-timestamp |
-| `KF.Kafka.Configuration` | Configuration model, profiles, validation, generated factories |
-| `KF.Kafka.Configuration.AspNetCore` | ASP.NET Core integration for configuration |
-| `KF.Kafka.Consumer` | Resilient consumer host with backpressure, routing, pipeline, restart |
-| `KF.Kafka.Core` | Shared runtime records, alert engine, diagnostics |
-| `KF.Kafka.Producer` | Resilient producer with buffering, backpressure, backlog, metrics |
+| `KoreForge.Kafka` | Meta-package — installs all components below |
+| `KoreForge.Kafka.AdminClient` | Read-only admin: topic metadata, consumer-lag, offsets-for-timestamp |
+| `KoreForge.Kafka.Configuration` | Configuration model, profiles, validation, generated factories |
+| `KoreForge.Kafka.Configuration.AspNetCore` | ASP.NET Core integration for configuration |
+| `KoreForge.Kafka.Consumer` | Resilient consumer host with backpressure, routing, pipeline, restart |
+| `KoreForge.Kafka.Core` | Shared runtime records, alert engine, diagnostics |
+| `KoreForge.Kafka.Producer` | Resilient producer with buffering, backpressure, backlog, metrics |
 
 ## Docker Dev Environment
 
@@ -1792,13 +1792,13 @@ services.AddScoped<IRowLevelFilterProvider<Order>, TenantOrderFilter>();
 
 | Package | Description |
 |---|---|
-| `KF.RestApi.Common.Abstractions` | Shared contracts, options |
-| `KF.RestApi.Common.Analyzers` | Roslyn rules enforcing layer separation |
-| `KF.RestApi.Common.Observability` | Observability helpers |
-| `KF.RestApi.Common.Persistence` | Audit persistence |
-| `KF.RestApi.Host.Internal` | Internal API host |
-| `KF.Web.Authorization` | Role semantics & authorization |
-| `KF.Web.HealthChecks` | Health check endpoints |
+| `KoreForge.RestApi.Common.Abstractions` | Shared contracts, options |
+| `KoreForge.RestApi.Common.Analyzers` | Roslyn rules enforcing layer separation |
+| `KoreForge.RestApi.Common.Observability` | Observability helpers |
+| `KoreForge.RestApi.Common.Persistence` | Audit persistence |
+| `KoreForge.RestApi.Host.Internal` | Internal API host |
+| `KoreForge.Web.Authorization` | Role semantics & authorization |
+| `KoreForge.Web.HealthChecks` | Health check endpoints |
 
 ## See Also
 
@@ -1811,7 +1811,7 @@ services.AddScoped<IRowLevelFilterProvider<Order>, TenantOrderFilter>();
 
 | | |
 |---|---|
-| **Package** | `KoreForge.Settings` (meta), `KF.Settings`, `KF.Settings.Abstractions`, `KF.Settings.Core`, `KF.Settings.Data`, `KF.Settings.Encryption`, `KF.Settings.Metrics`, `KoreForge.Settings.Cli` |
+| **Package** | `KoreForge.Settings` (meta), `KoreForge.Settings`, `KoreForge.Settings.Abstractions`, `KoreForge.Settings.Core`, `KoreForge.Settings.Data`, `KoreForge.Settings.Encryption`, `KoreForge.Settings.Metrics`, `KoreForge.Settings.Cli` |
 | **Namespace** | `KoreForge.Settings.*` |
 | **Source** | `KoreForge.Settings/src/` |
 | **Tests** | `KoreForge.Settings/tst/` |
@@ -1850,7 +1850,7 @@ dotnet tool install -g KoreForge.Settings.Cli
 var builder = WebApplication.CreateBuilder(args);
 
 // 1. Add KF Settings as a configuration source
-builder.Configuration.AddKFSettings(opts =>
+builder.Configuration.AddKoreForgeSettings(opts =>
 {
     opts.ApplicationId = "my-app";
     opts.PollingInterval = TimeSpan.FromSeconds(30);
@@ -1858,15 +1858,15 @@ builder.Configuration.AddKFSettings(opts =>
 });
 
 // 2. Register services
-builder.Services.AddKFSettingsServices(builder.Configuration);
+builder.Services.AddKoreForgeSettingsServices(builder.Configuration);
 ```
 
 ## Connection String Resolution
 
 The connection string is resolved in priority order:
 
-1. `KFSettingsOptions.ConnectionString` — set directly in code
-2. `ConnectionStrings:KFSettings` — from `appsettings.json`
+1. `KoreForgeSettingsOptions.ConnectionString` — set directly in code
+2. `ConnectionStrings:KoreForgeSettings` — from `appsettings.json`
 3. `KF:Settings:ConnectionString` — from configuration
 4. `KF_SETTINGS_CONNECTIONSTRING` — environment variable
 
@@ -1919,30 +1919,30 @@ app.MapGet("/health/settings", (IHealthReporter health) =>
     new { health.LastSuccessfulReloadUtc, health.ConsecutiveFailures, health.LastRowCount });
 ```
 
-## CLI Tool — `kf-settings`
+## CLI Tool — `koreforge-settings`
 
 ```bash
-kf-settings list     --application my-app --connection "Server=...;Database=...;"
-kf-settings get      --application my-app --key "Feature:Enabled"
-kf-settings set      --application my-app --key "Feature:Enabled" --value "true"
-kf-settings delete   --application my-app --key "Feature:Enabled"
-kf-settings history  --application my-app --key "Feature:Enabled"
-kf-settings rollback --application my-app --key "Feature:Enabled" --version 2
-kf-settings export   --application my-app > settings.json
-kf-settings import   --application my-app < settings.json
+koreforge-settings list     --application my-app --connection "Server=...;Database=...;"
+koreforge-settings get      --application my-app --key "Feature:Enabled"
+koreforge-settings set      --application my-app --key "Feature:Enabled" --value "true"
+koreforge-settings delete   --application my-app --key "Feature:Enabled"
+koreforge-settings history  --application my-app --key "Feature:Enabled"
+koreforge-settings rollback --application my-app --key "Feature:Enabled" --version 2
+koreforge-settings export   --application my-app > settings.json
+koreforge-settings import   --application my-app < settings.json
 ```
 
 ## Sub-Packages
 
 | Package | Description |
 |---|---|
-| `KF.Settings` | Configuration provider, hot-reload background service |
-| `KF.Settings.Abstractions` | Models, interfaces, options |
-| `KF.Settings.Core` | `SettingsService`, `HistoryService`, binary accessor |
-| `KF.Settings.Data` | EF Core `KFSettingsDbContext` |
-| `KF.Settings.Encryption` | `IEncryptionProvider` contract + `NoOpEncryptionProvider` |
-| `KF.Settings.Metrics` | In-memory metrics recorder for reload operations |
-| `KF.Settings.Cli` | CLI tool |
+| `KoreForge.Settings` | Configuration provider, hot-reload background service |
+| `KoreForge.Settings.Abstractions` | Models, interfaces, options |
+| `KoreForge.Settings.Core` | `SettingsService`, `HistoryService`, binary accessor |
+| `KoreForge.Settings.Data` | EF Core `KoreForgeSettingsDbContext` |
+| `KoreForge.Settings.Encryption` | `IEncryptionProvider` contract + `NoOpEncryptionProvider` |
+| `KoreForge.Settings.Metrics` | In-memory metrics recorder for reload operations |
+| `KoreForge.Settings.Cli` | CLI tool |
 
 ## See Also
 
@@ -2121,18 +2121,18 @@ dotnet new install KoreForge.Templates
 
 | Short Name | Type | Description |
 |---|---|---|
-| `kf-kafka-processor` | Solution | Kafka consumer with Vue 3 dashboard, SignalR metrics, SQL live-reload settings, structured logging, health checks |
-| `kf-data` | Solution | EF Core data library with database-first scaffolding, partial DbContext, options, and DI registration |
-| `kf-odata` | Solution | OData controller library with Roslyn source-generated CRUD controllers from a DbContext |
+| `koreforge-kafka-processor` | Solution | Kafka consumer with Vue 3 dashboard, SignalR metrics, SQL live-reload settings, structured logging, health checks |
+| `koreforge-data` | Solution | EF Core data library with database-first scaffolding, partial DbContext, options, and DI registration |
+| `koreforge-odata` | Solution | OData controller library with Roslyn source-generated CRUD controllers from a DbContext |
 
 ---
 
-## kf-kafka-processor
+## koreforge-kafka-processor
 
 Creates a full Kafka consumer application with dashboard.
 
 ```powershell
-dotnet new kf-kafka-processor -n MyApp --KafkaTopic orders --DatabaseName OrderDb
+dotnet new koreforge-kafka-processor -n MyApp --KafkaTopic orders --DatabaseName OrderDb
 ```
 
 ### Parameters
@@ -2155,12 +2155,12 @@ dotnet new kf-kafka-processor -n MyApp --KafkaTopic orders --DatabaseName OrderD
 
 ---
 
-## kf-data
+## koreforge-data
 
 Creates an EF Core data library using database-first scaffolding.
 
 ```powershell
-dotnet new kf-data -n MyCompany.Data.Staff --DatabaseShort Staff
+dotnet new koreforge-data -n MyCompany.Data.Staff --DatabaseShort Staff
 ```
 
 ### Parameters
@@ -2177,12 +2177,12 @@ dotnet new kf-data -n MyCompany.Data.Staff --DatabaseShort Staff
 
 ---
 
-## kf-odata
+## koreforge-odata
 
 Creates an OData controller library with source-generated CRUD endpoints.
 
 ```powershell
-dotnet new kf-odata -n MyCompany.OData.Staff --DatabaseShort Staff --DataNamespace MyCompany.Data.Staff
+dotnet new koreforge-odata -n MyCompany.OData.Staff --DatabaseShort Staff --DataNamespace MyCompany.Data.Staff
 ```
 
 ### Parameters
@@ -2191,7 +2191,7 @@ dotnet new kf-odata -n MyCompany.OData.Staff --DatabaseShort Staff --DataNamespa
 |---|---|---|
 | `-n` | _(required)_ | Project name and namespace |
 | `--DatabaseShort` | `Alerts` | Short name matching Data library (e.g. `Staff` → `StaffDbContext`) |
-| `--DataNamespace` | `KF.Data.Alerts` | Full namespace of the Data library where the DbContext lives |
+| `--DataNamespace` | `KoreForge.Data.Alerts` | Full namespace of the Data library where the DbContext lives |
 
 ### Post-Scaffold Steps
 
@@ -2205,9 +2205,9 @@ dotnet new kf-odata -n MyCompany.OData.Staff --DatabaseShort Staff --DataNamespa
 
 | Template | Source Location |
 |---|---|
-| `kf-kafka-processor` | `apps/EventProcessor/` — the live app IS the template (golden master) |
-| `kf-data` | `templates/kf-data/` — standalone template archetype |
-| `kf-odata` | `templates/kf-odata/` — standalone template archetype |
+| `koreforge-kafka-processor` | `apps/EventProcessor/` — the live app IS the template (golden master) |
+| `koreforge-data` | `templates/koreforge-data/` — standalone template archetype |
+| `koreforge-odata` | `templates/koreforge-odata/` — standalone template archetype |
 
 ## Local Development
 
@@ -2216,7 +2216,7 @@ dotnet new kf-odata -n MyCompany.OData.Staff --DatabaseShort Staff --DataNamespa
 ./scr/install-local.ps1
 
 # Test 
-dotnet new kf-data -n TestData --DatabaseShort Test -o /tmp/TestData
+dotnet new koreforge-data -n TestData --DatabaseShort Test -o /tmp/TestData
 
 # Uninstall
 ./scr/uninstall-local.ps1
@@ -2524,7 +2524,7 @@ Packs the templates into `artifacts/KoreForge.Templates.<version>.nupkg`.
 
 ## NuGet Integration Test Scripts
 
-Located in `KF.Nuget.Integration.Tests/scr/`.
+Located in `KoreForge.Nuget.Integration.Tests/scr/`.
 
 ### Build-Integration.ps1
 
@@ -2544,14 +2544,14 @@ Installs specific versions of KoreForge packages into the integration test proje
 
 | Tool | Package | Description |
 |---|---|---|
-| `kf-settings` | `KoreForge.Settings.Cli` | Manage SQL-backed settings: list, get, set, delete, history, rollback, export, import |
-| `jex` | `KF.Jex.Cli` | Evaluate JEX expressions from the command line, pipe JSON, use as a build/CI tool |
+| `koreforge-settings` | `KoreForge.Settings.Cli` | Manage SQL-backed settings: list, get, set, delete, history, rollback, export, import |
+| `jex` | `KoreForge.Jex.Cli` | Evaluate JEX expressions from the command line, pipe JSON, use as a build/CI tool |
 
 Install globally:
 
 ```bash
 dotnet tool install -g KoreForge.Settings.Cli
-dotnet tool install -g KF.Jex.Cli
+dotnet tool install -g KoreForge.Jex.Cli
 ```
 
 See [50-Settings.md](50-Settings.md) and [11a-Jex-Cli.md](11a-Jex-Cli.md) for full CLI documentation.
@@ -2576,7 +2576,7 @@ This folder contains generated API reference documentation for each `KoreForge.*
 | [KoreForge.Kafka.md](KoreForge.Kafka.md) | `KoreForge.Kafka` | Consumer/Producer hosts, `IProducerBuffer`, policies |
 | [KoreForge.Jex.md](KoreForge.Jex.md) | `KoreForge.Jex` | `Jex` class, transform methods |
 | [KoreForge.Web.md](KoreForge.Web.md) | `KoreForge.Web` | Authorization, endpoint builder, `ICurrentUser` |
-| [KoreForge.Settings.md](KoreForge.Settings.md) | `KoreForge.Settings` | `ISettingsService`, `IHistoryService`, `KFSettingsOptions` |
+| [KoreForge.Settings.md](KoreForge.Settings.md) | `KoreForge.Settings` | `ISettingsService`, `IHistoryService`, `KoreForgeSettingsOptions` |
 | [KoreForge.Data.md](KoreForge.Data.md) | `KoreForge.Data` | `AlertsDbContext`, entity model, registration |
 | [KoreForge.OData.md](KoreForge.OData.md) | `KoreForge.OData` | Source generator, attributes, base controller, security |
 | [KoreForge.Json.md](KoreForge.Json.md) | `KoreForge.Json` | `JsonMaterializer`, `RootPropertyClassifier` |
@@ -2626,10 +2626,10 @@ The .NET SDK writes `{AssemblyName}.xml` alongside the DLL during build.
 **Multi-assembly bundler packages** (Processing, Kafka, Logging): The bundler `.csproj` uses `None Include=...` to explicitly include each sub-assembly's XML file alongside the DLL:
 
 ```xml
-<!-- In KF.Processing.csproj (bundler) -->
+<!-- In KoreForge.Processing.csproj (bundler) -->
 <ItemGroup>
-  <ProcessingAssemblies Include="$(MSBuildThisFileDirectory)..\KF.Processing.Pipelines\bin\$(Configuration)\net10.0\KF.Processing.Pipelines.dll" />
-  <ProcessingAssemblies Include="$(MSBuildThisFileDirectory)..\KF.Processing.Pipelines\bin\$(Configuration)\net10.0\KF.Processing.Pipelines.xml" />
+  <ProcessingAssemblies Include="$(MSBuildThisFileDirectory)..\KoreForge.Processing.Pipelines\bin\$(Configuration)\net10.0\KoreForge.Processing.Pipelines.dll" />
+  <ProcessingAssemblies Include="$(MSBuildThisFileDirectory)..\KoreForge.Processing.Pipelines\bin\$(Configuration)\net10.0\KoreForge.Processing.Pipelines.xml" />
   <!-- ... repeat for each sub-assembly ... -->
 </ItemGroup>
 ```
@@ -2650,12 +2650,12 @@ The .NET SDK writes `{AssemblyName}.xml` alongside the DLL during build.
 
 ```xml
 <doc>
-  <assembly><name>KF.Time</name></assembly>
+  <assembly><name>KoreForge.Time</name></assembly>
   <members>
-    <member name="T:KF.Time.ISystemClock">
+    <member name="T:KoreForge.Time.ISystemClock">
       <summary>Abstracts the system clock...</summary>
     </member>
-    <member name="P:KF.Time.ISystemClock.UtcNow">
+    <member name="P:KoreForge.Time.ISystemClock.UtcNow">
       <summary>Returns the current UTC time.</summary>
     </member>
   </members>
@@ -2701,7 +2701,7 @@ When using these files to understand a KoreForge API:
 
 # KoreForge.AppLifecycle — API Reference
 
-**Package**: `KoreForge.AppLifecycle`  |  **Assembly**: `KF.AppLifecycle.dll`  |  **Namespace**: `KoreForge.AppLifecycle`
+**Package**: `KoreForge.AppLifecycle`  |  **Assembly**: `KoreForge.AppLifecycle.dll`  |  **Namespace**: `KoreForge.AppLifecycle`
 
 ---
 
@@ -2895,7 +2895,7 @@ public sealed class ScheduledTasksHostedService : BackgroundService
 
 # KoreForge.Data — API Reference
 
-> Package: `KoreForge.Data` · Assembly: `KF.Data`
+> Package: `KoreForge.Data` · Assembly: `KoreForge.Data`
 
 ## Registration
 
@@ -2921,19 +2921,19 @@ public sealed class AlertsDbOptions
 
 ## `AlertsDbContext`
 
-EF Core `DbContext` with scaffolded entities. Extend via partial class in `src/KF.Data/AlertsDbContext.cs`.
+EF Core `DbContext` with scaffolded entities. Extend via partial class in `src/KoreForge.Data/AlertsDbContext.cs`.
 
 ### Entity Sets
 
 | DbSet | Entity Type | Namespace |
 |-------|------------|-----------|
-| `NotificationOutboxes` | `NotificationOutbox` | `KF.Data.Alerts.Notification` |
-| `EmailPayloads` | `EmailPayload` | `KF.Data.Alerts.Notification` |
-| `SmsPayloads` | `SmsPayload` | `KF.Data.Alerts.Notification` |
-| `Channels` | `Channel` | `KF.Data.Alerts.Notification` |
-| `Priorities` | `Priority` | `KF.Data.Alerts.Notification` |
-| `OutboxStatuses` | `OutboxStatus` | `KF.Data.Alerts.Notification` |
-| `SendOutcomes` | `SendOutcome` | `KF.Data.Alerts.Notification` |
+| `NotificationOutboxes` | `NotificationOutbox` | `KoreForge.Data.Alerts.Notification` |
+| `EmailPayloads` | `EmailPayload` | `KoreForge.Data.Alerts.Notification` |
+| `SmsPayloads` | `SmsPayload` | `KoreForge.Data.Alerts.Notification` |
+| `Channels` | `Channel` | `KoreForge.Data.Alerts.Notification` |
+| `Priorities` | `Priority` | `KoreForge.Data.Alerts.Notification` |
+| `OutboxStatuses` | `OutboxStatus` | `KoreForge.Data.Alerts.Notification` |
+| `SendOutcomes` | `SendOutcome` | `KoreForge.Data.Alerts.Notification` |
 
 ### `NotificationOutbox`
 
@@ -2954,13 +2954,13 @@ Core entity with foreign keys to all lookup tables, retry tracking, and timestam
 .\scr\scaffold.ps1
 ```
 
-Generated code lives in `src/KF.Data/Generated/` — do not edit.
+Generated code lives in `src/KoreForge.Data/Generated/` — do not edit.
 
 ---
 
 # KoreForge.Jex — API Reference
 
-**Package**: `KoreForge.Jex`  |  **Assembly**: `KF.Jex.dll`  |  **Namespace**: `KoreForge.Jex`
+**Package**: `KoreForge.Jex`  |  **Assembly**: `KoreForge.Jex.dll`  |  **Namespace**: `KoreForge.Jex`
 
 ---
 
@@ -3054,7 +3054,7 @@ See [../Introduction/04-JEX-DSL.md](../Introduction/04-JEX-DSL.md) for full synt
 
 # KoreForge.Json — API Reference
 
-> Package: `KoreForge.Json` · Assemblies: `KF.Json`, `KF.Json.Jex`
+> Package: `KoreForge.Json` · Assemblies: `KoreForge.Json`, `KoreForge.Json.Jex`
 
 Zero KoreForge dependencies.
 
@@ -3110,7 +3110,7 @@ public sealed class RootPropertyClassifier
 }
 ```
 
-## `ExpandJsonFunction` (KF.Json.Jex)
+## `ExpandJsonFunction` (KoreForge.Json.Jex)
 
 ```csharp
 public sealed class ExpandJsonFunction : IJexFunction
@@ -3135,12 +3135,12 @@ Multi-assembly package:
 
 | Assembly | Namespace | Contents |
 |----------|-----------|----------|
-| `KF.Kafka.Consumer.dll` | `KoreForge.Kafka.Consumer` | `KafkaConsumerHost`, `IKafkaBatchProcessor` |
-| `KF.Kafka.Producer.dll` | `KoreForge.Kafka.Producer` | `KafkaProducerHost`, `IProducerBuffer` |
-| `KF.Kafka.AdminClient.dll` | `KoreForge.Kafka.AdminClient` | `KafkaAdminClient` |
-| `KF.Kafka.Pipeline.dll` | `KoreForge.Kafka.Pipeline` | `KafkaPipelineProcessorBuilder` |
-| `KF.Kafka.Configuration.dll` | `KoreForge.Kafka.Configuration` | Options, policy types |
-| `KF.Kafka.Abstractions.dll` | `KoreForge.Kafka.Abstractions` | Shared interfaces |
+| `KoreForge.Kafka.Consumer.dll` | `KoreForge.Kafka.Consumer` | `KafkaConsumerHost`, `IKafkaBatchProcessor` |
+| `KoreForge.Kafka.Producer.dll` | `KoreForge.Kafka.Producer` | `KafkaProducerHost`, `IProducerBuffer` |
+| `KoreForge.Kafka.AdminClient.dll` | `KoreForge.Kafka.AdminClient` | `KafkaAdminClient` |
+| `KoreForge.Kafka.Pipeline.dll` | `KoreForge.Kafka.Pipeline` | `KafkaPipelineProcessorBuilder` |
+| `KoreForge.Kafka.Configuration.dll` | `KoreForge.Kafka.Configuration` | Options, policy types |
+| `KoreForge.Kafka.Abstractions.dll` | `KoreForge.Kafka.Abstractions` | Shared interfaces |
 
 ---
 
@@ -3415,9 +3415,9 @@ Multi-assembly package:
 
 | Assembly | TFM | Contents |
 |----------|-----|----------|
-| `KF.Logging.Runtime.dll` | `net10.0` | Runtime logging helpers, DI extensions |
-| `KF.Logging.Generator.dll` | `netstandard2.0` | Roslyn source generator |
-| `KF.Logging.Analyzers.dll` | `netstandard2.0` | Roslyn analyzer (duplicate ID detection) |
+| `KoreForge.Logging.Runtime.dll` | `net10.0` | Runtime logging helpers, DI extensions |
+| `KoreForge.Logging.Generator.dll` | `netstandard2.0` | Roslyn source generator |
+| `KoreForge.Logging.Analyzers.dll` | `netstandard2.0` | Roslyn analyzer (duplicate ID detection) |
 
 ---
 
@@ -3573,7 +3573,7 @@ public sealed class LogStashOptions
 
 # KoreForge.Metrics — API Reference
 
-**Package**: `KoreForge.Metrics`  |  **Assembly**: `KF.Metrics.dll`  |  **Namespace**: `KoreForge.Metrics`
+**Package**: `KoreForge.Metrics`  |  **Assembly**: `KoreForge.Metrics.dll`  |  **Namespace**: `KoreForge.Metrics`
 
 ---
 
@@ -3850,7 +3850,7 @@ app.MapMonitoringEndpoints("/monitoring");
 
 # KoreForge.OData — API Reference
 
-> Package: `KoreForge.OData` · Assemblies: `KF.OData`, `KF.OData.Generators`
+> Package: `KoreForge.OData` · Assemblies: `KoreForge.OData`, `KoreForge.OData.Generators`
 
 ## Registration
 
@@ -4011,11 +4011,11 @@ Multi-assembly package:
 
 | Assembly | Namespace | Contents |
 |----------|-----------|----------|
-| `KF.Processing.Pipeline.dll` | `KoreForge.Processing.Pipeline` | `Pipeline` builder, `IPipeline<TIn,TOut>` |
-| `KF.Processing.Pipeline.Abstractions.dll` | `KoreForge.Processing.Pipeline.Abstractions` | `IPipelineStep<TIn,TOut>`, `IPipelineContext` |
-| `KF.Processing.Flow.dll` | `KoreForge.Processing.Flow` | `Flow` builder, `IFlow<TContext>` |
-| `KF.Processing.Flow.Abstractions.dll` | `KoreForge.Processing.Flow.Abstractions` | `IFlowStage<TContext>`, `IFlowContext` |
-| `KF.Processing.Pipelines.dll` | `KoreForge.Processing.Pipelines` | Built-in pipeline composite types |
+| `KoreForge.Processing.Pipeline.dll` | `KoreForge.Processing.Pipeline` | `Pipeline` builder, `IPipeline<TIn,TOut>` |
+| `KoreForge.Processing.Pipeline.Abstractions.dll` | `KoreForge.Processing.Pipeline.Abstractions` | `IPipelineStep<TIn,TOut>`, `IPipelineContext` |
+| `KoreForge.Processing.Flow.dll` | `KoreForge.Processing.Flow` | `Flow` builder, `IFlow<TContext>` |
+| `KoreForge.Processing.Flow.Abstractions.dll` | `KoreForge.Processing.Flow.Abstractions` | `IFlowStage<TContext>`, `IFlowContext` |
+| `KoreForge.Processing.Pipelines.dll` | `KoreForge.Processing.Pipelines` | Built-in pipeline composite types |
 
 ---
 
@@ -4271,22 +4271,22 @@ public sealed class FlowException : Exception
 
 # KoreForge.Settings — API Reference
 
-> Package: `KoreForge.Settings` · Assemblies: `KF.Settings`, `KF.Settings.Abstractions`, `KF.Settings.Core`, `KF.Settings.Data`, `KF.Settings.Encryption`, `KF.Settings.Metrics`, `KF.Settings.Cli`
+> Package: `KoreForge.Settings` · Assemblies: `KoreForge.Settings`, `KoreForge.Settings.Abstractions`, `KoreForge.Settings.Core`, `KoreForge.Settings.Data`, `KoreForge.Settings.Encryption`, `KoreForge.Settings.Metrics`, `KoreForge.Settings.Cli`
 
 ## Registration
 
 ```csharp
 // Configuration source
-builder.Configuration.AddKFSettings(Action<KFSettingsOptions> configure)
+builder.Configuration.AddKoreForgeSettings(Action<KoreForgeSettingsOptions> configure)
 
 // DI services
-builder.Services.AddKFSettingsServices(IConfiguration configuration)
+builder.Services.AddKoreForgeSettingsServices(IConfiguration configuration)
 ```
 
-## `KFSettingsOptions`
+## `KoreForgeSettingsOptions`
 
 ```csharp
-public sealed class KFSettingsOptions
+public sealed class KoreForgeSettingsOptions
 {
     public string ConnectionString { get; set; }
     public string? ApplicationId { get; set; }
@@ -4357,15 +4357,15 @@ public interface IHealthReporter
 
 ## Connection String Resolution
 
-1. `KFSettingsOptions.ConnectionString`
-2. `ConnectionStrings:KFSettings`
+1. `KoreForgeSettingsOptions.ConnectionString`
+2. `ConnectionStrings:KoreForgeSettings`
 3. `KF:Settings:ConnectionString`
 4. `KF_SETTINGS_CONNECTIONSTRING` environment variable
 
 ## CLI Tool
 
 ```
-kf-settings list|get|set|delete|history|rollback|export|import
+koreforge-settings list|get|set|delete|history|rollback|export|import
   --application <id>
   --connection <connstr>
   --key <key>
@@ -4377,7 +4377,7 @@ kf-settings list|get|set|delete|history|rollback|export|import
 
 # KoreForge.Time — API Reference
 
-**Package**: `KoreForge.Time`  |  **Assembly**: `KF.Time.dll`  |  **Namespace**: `KF.Time`
+**Package**: `KoreForge.Time`  |  **Assembly**: `KoreForge.Time.dll`  |  **Namespace**: `KoreForge.Time`
 
 ---
 
@@ -4386,7 +4386,7 @@ kf-settings list|get|set|delete|history|rollback|export|import
 Abstracts the system clock for testable time-dependent code.
 
 ```csharp
-namespace KF.Time;
+namespace KoreForge.Time;
 
 public interface ISystemClock
 {
@@ -4408,7 +4408,7 @@ public interface ISystemClock
 Returns the machine's local time. Thread-safe singleton.
 
 ```csharp
-namespace KF.Time;
+namespace KoreForge.Time;
 
 public sealed class LocalSystemClock : ISystemClock
 {
@@ -4428,7 +4428,7 @@ public sealed class LocalSystemClock : ISystemClock
 Returns UTC time. Thread-safe singleton.
 
 ```csharp
-namespace KF.Time;
+namespace KoreForge.Time;
 
 public sealed class UtcSystemClock : ISystemClock
 {
@@ -4448,7 +4448,7 @@ public sealed class UtcSystemClock : ISystemClock
 A manually-controlled clock for deterministic unit testing. **Not thread-safe** — intended for single-threaded test use.
 
 ```csharp
-namespace KF.Time;
+namespace KoreForge.Time;
 
 public sealed class VirtualSystemClock : ISystemClock
 {
@@ -4488,7 +4488,7 @@ public sealed class VirtualSystemClock : ISystemClock
 A convenience static accessor.
 
 ```csharp
-namespace KF.Time;
+namespace KoreForge.Time;
 
 public static class SystemClock
 {

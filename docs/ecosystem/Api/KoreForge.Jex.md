@@ -1,6 +1,6 @@
 # KoreForge.Jex — API Reference
 
-**Package**: `KoreForge.Jex`  |  **Assembly**: `KF.Jex.dll`  |  **Namespace**: `KoreForge.Jex`
+**Package**: `KoreForge.Jex`  |  **Assembly**: `KoreForge.Jex.dll`  |  **Namespace**: `KoreForge.Jex`
 
 ---
 

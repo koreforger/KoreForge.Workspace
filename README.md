@@ -18,7 +18,7 @@ artifacts/  Ignored output root for local feed, logs, test results, coverage, re
 ## Rules
 
 1. Package repos are grouped repos and publish packages independently where needed.
-2. KoreForge code uses `KoreForge.*` for repos, projects, assemblies, namespaces, and packages. `KF.*` is legacy only.
+2. KoreForge code uses `KoreForge.*` for repos, projects, assemblies, namespaces, and packages. `KoreForge.*` is legacy only.
 3. Event-owned code uses `Event.*`, never `KoreForge.*`.
 4. No `.csproj` file uses `ProjectReference`. Development consumes local NuGet packages from `artifacts/packages` before nuget.org.
 5. Every buildable repo exposes standard scripts under `scr/`.

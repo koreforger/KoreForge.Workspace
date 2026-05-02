@@ -9,23 +9,23 @@
     {
       "name": "KoreForge packages",
       "paths": [
-        "packages/KoreForge.Time",
-        "packages/KoreForge.Jex",
-        "packages/KoreForge.Json",
-        "packages/KoreForge.Data",
-        "packages/KoreForge.OData",
-        "packages/KoreForge.Metrics",
-        "packages/KoreForge.Metrics.AspNet",
-        "packages/KoreForge.Logging",
-        "packages/KoreForge.Logging.Serilog",
-        "packages/KoreForge.Processing",
-        "packages/KoreForge.AppLifecycle",
-        "packages/KoreForge.Kafka",
-        "packages/KoreForge.Web",
-        "packages/KoreForge.Settings",
-        "packages/KoreForge.Scripts",
-        "packages/KoreForge.Monitoring",
-        "packages/KoreForge.Templates"
+        "eco-system/KoreForge.Time",
+        "eco-system/KoreForge.Jex",
+        "eco-system/KoreForge.Json",
+        "eco-system/KoreForge.Data",
+        "eco-system/KoreForge.OData",
+        "eco-system/KoreForge.Metrics",
+        "eco-system/KoreForge.Metrics.AspNet",
+        "eco-system/KoreForge.Logging",
+        "eco-system/KoreForge.Logging.Serilog",
+        "eco-system/KoreForge.Processing",
+        "eco-system/KoreForge.AppLifecycle",
+        "eco-system/KoreForge.Kafka",
+        "eco-system/KoreForge.Web",
+        "eco-system/KoreForge.Settings",
+        "eco-system/KoreForge.Scripts",
+        "eco-system/KoreForge.Monitoring",
+        "eco-system/KoreForge.Templates"
       ]
     },
     {
@@ -40,10 +40,10 @@
     {
       "name": "KoreForge npm",
       "paths": [
-        "npm/KoreForge.Scripts.Vue",
-        "npm/KoreForge.Monitoring.Shell",
-        "npm/KoreForge.Jex.Vue",
-        "npm/KoreForge.Kafka.Vue"
+        "eco-web/KoreForge.Scripts.Vue",
+        "eco-web/KoreForge.Monitoring.Shell",
+        "eco-web/KoreForge.Jex.Vue",
+        "eco-web/KoreForge.Kafka.Vue"
       ]
     },
     {

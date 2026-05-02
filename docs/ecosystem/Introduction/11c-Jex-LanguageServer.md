@@ -1,10 +1,10 @@
-# KF.Jex.LanguageServer — JEX Language Server Protocol
+# KoreForge.Jex.LanguageServer — JEX Language Server Protocol
 
 | | |
 |---|---|
-| **Package** | `KF.Jex.LanguageServer` |
-| **Source** | `KF.Jex.LanguageServer/src/` |
-| **Tests** | `KF.Jex.LanguageServer/tst/` |
+| **Package** | `KoreForge.Jex.LanguageServer` |
+| **Source** | `KoreForge.Jex.LanguageServer/src/` |
+| **Tests** | `KoreForge.Jex.LanguageServer/tst/` |
 | **Protocol** | Language Server Protocol (LSP) over stdio |
 | **Dependencies** | KoreForge.Jex, OmniSharp.Extensions.LanguageServer |
 
@@ -24,7 +24,7 @@ The JEX Language Server implements the Language Server Protocol (LSP), which is 
 ## Building
 
 ```powershell
-cd KF.Jex.LanguageServer
+cd KoreForge.Jex.LanguageServer
 .\scr\build-rebuild.ps1         # Build
 .\scr\build-test.ps1          # Run tests
 ```
@@ -32,7 +32,7 @@ cd KF.Jex.LanguageServer
 ## Architecture
 
 ```
-VS Code ←── stdio ──→ KF.Jex.LanguageServer
+VS Code ←── stdio ──→ KoreForge.Jex.LanguageServer
                            │
                            ├── TextDocumentSyncHandler (tracks open files)
                            ├── DiagnosticsHandler (syntax errors)
@@ -45,7 +45,7 @@ VS Code ←── stdio ──→ KF.Jex.LanguageServer
 For editors other than VS Code, start the language server manually:
 
 ```bash
-dotnet run --project KF.Jex.LanguageServer/src/KF.Jex.LanguageServer.csproj
+dotnet run --project KoreForge.Jex.LanguageServer/src/KoreForge.Jex.LanguageServer.csproj
 ```
 
 The server communicates over stdin/stdout using the LSP JSON-RPC protocol.

@@ -1,0 +1,68 @@
+name: Daily Snapshot
+
+on:
+  schedule:
+    - cron: '0 3 * * *'   # 03:00 UTC = 05:00 UTC+2
+  workflow_dispatch:        # allow manual trigger
+
+jobs:
+  snapshot:
+    name: Compact, Encode & Archive
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: write        # needed to delete previous artifacts via API
+
+    steps:
+      - name: Checkout workspace
+        uses: actions/checkout@v4
+
+      - name: Clone all sub-repos
+        shell: pwsh
+        run: pwsh -NoProfile -File setup-koreforge.ps1 -CloneMissing
+        # setup-koreforge.ps1 reads builder.config.json and clones every repo
+        # listed under groups/paths that is not already present on disk.
+        # eco-web repos that share the workspace remote are already present
+        # from the checkout above and are skipped automatically.
+
+      - name: Compact workspace zip
+        shell: pwsh
+        run: pwsh -NoProfile -File scr/zip-compact-workspace.ps1 -Overwrite
+
+      - name: Encode compact zip → Information.zip
+        shell: pwsh
+        run: pwsh -NoProfile -File scr/encode-compact-zip.ps1
+
+      - name: Rename Information.zip → snapshot.dat
+        shell: pwsh
+        run: |
+          $src = 'artifacts/zips/Information.zip'
+          $dst = 'artifacts/zips/snapshot.dat'
+          Move-Item -Path $src -Destination $dst -Force
+          Write-Host "Renamed to $dst  ($([math]::Round((Get-Item $dst).Length/1MB,2)) MB)"
+
+      - name: Delete previous snapshot artifacts
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: pwsh
+        run: |
+          $repo  = '${{ github.repository }}'
+          $name  = 'workspace-snapshot'
+          $headers = @{ Authorization = "Bearer $env:GH_TOKEN"; Accept = 'application/vnd.github+json' }
+          $url   = "https://api.github.com/repos/$repo/actions/artifacts?name=$name&per_page=100"
+          $resp  = Invoke-RestMethod -Uri $url -Headers $headers
+          foreach ($artifact in $resp.artifacts) {
+            Write-Host "Deleting artifact id=$($artifact.id) created=$($artifact.created_at)"
+            Invoke-RestMethod -Method Delete `
+              -Uri "https://api.github.com/repos/$repo/actions/artifacts/$($artifact.id)" `
+              -Headers $headers | Out-Null
+          }
+          Write-Host "Previous snapshots deleted."
+
+      - name: Upload snapshot.dat as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: workspace-snapshot
+          path: artifacts/zips/snapshot.dat
+          retention-days: 90
+          if-no-files-found: error

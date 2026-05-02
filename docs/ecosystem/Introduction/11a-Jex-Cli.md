@@ -1,9 +1,9 @@
-# KF.Jex.Cli — JEX Command-Line Interface
+# KoreForge.Jex.Cli — JEX Command-Line Interface
 
 | | |
 |---|---|
 | **Tool** | `jex` (standalone executable) |
-| **Source** | `KF.Jex.Cli/src/` |
+| **Source** | `KoreForge.Jex.Cli/src/` |
 | **Type** | .NET tool / standalone binary |
 | **Dependencies** | KoreForge.Jex |
 
@@ -25,7 +25,7 @@ The JEX CLI is a command-line tool that executes JEX scripts directly from the t
 ### Build from source
 
 ```powershell
-cd KF.Jex.Cli
+cd KoreForge.Jex.Cli
 .\scr\build-rebuild.ps1
 ```
 

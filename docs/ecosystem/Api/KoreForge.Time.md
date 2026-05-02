@@ -1,6 +1,6 @@
 # KoreForge.Time — API Reference
 
-**Package**: `KoreForge.Time`  |  **Assembly**: `KF.Time.dll`  |  **Namespace**: `KF.Time`
+**Package**: `KoreForge.Time`  |  **Assembly**: `KoreForge.Time.dll`  |  **Namespace**: `KoreForge.Time`
 
 ---
 
@@ -9,7 +9,7 @@
 Abstracts the system clock for testable time-dependent code.
 
 ```csharp
-namespace KF.Time;
+namespace KoreForge.Time;
 
 public interface ISystemClock
 {
@@ -31,7 +31,7 @@ public interface ISystemClock
 Returns the machine's local time. Thread-safe singleton.
 
 ```csharp
-namespace KF.Time;
+namespace KoreForge.Time;
 
 public sealed class LocalSystemClock : ISystemClock
 {
@@ -51,7 +51,7 @@ public sealed class LocalSystemClock : ISystemClock
 Returns UTC time. Thread-safe singleton.
 
 ```csharp
-namespace KF.Time;
+namespace KoreForge.Time;
 
 public sealed class UtcSystemClock : ISystemClock
 {
@@ -71,7 +71,7 @@ public sealed class UtcSystemClock : ISystemClock
 A manually-controlled clock for deterministic unit testing. **Not thread-safe** — intended for single-threaded test use.
 
 ```csharp
-namespace KF.Time;
+namespace KoreForge.Time;
 
 public sealed class VirtualSystemClock : ISystemClock
 {
@@ -111,7 +111,7 @@ public sealed class VirtualSystemClock : ISystemClock
 A convenience static accessor.
 
 ```csharp
-namespace KF.Time;
+namespace KoreForge.Time;
 
 public static class SystemClock
 {

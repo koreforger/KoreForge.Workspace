@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Package** | `KF.Kafka` (meta), `KF.Kafka.Consumer`, `KF.Kafka.Producer`, `KF.Kafka.AdminClient`, `KF.Kafka.Configuration`, `KF.Kafka.Configuration.AspNetCore`, `KF.Kafka.Core` |
+| **Package** | `KoreForge.Kafka` (meta), `KoreForge.Kafka.Consumer`, `KoreForge.Kafka.Producer`, `KoreForge.Kafka.AdminClient`, `KoreForge.Kafka.Configuration`, `KoreForge.Kafka.Configuration.AspNetCore`, `KoreForge.Kafka.Core` |
 | **Namespace** | `KoreForge.Kafka.*` |
 | **Source** | `KoreForge.Kafka/src/` |
 | **Tests** | `KoreForge.Kafka/tst/` |
@@ -29,18 +29,18 @@ KoreForge.Kafka provides a production-grade Kafka stack built on Confluent.Kafka
 
 - Requires Confluent.Kafka — not an abstraction over arbitrary message brokers.
 - Consumer uses a single-threaded partition model per consumer group. High-throughput scenarios should deploy multiple consumer instances.
-- The meta-package `KF.Kafka` pulls in all sub-packages. Use individual packages for leaner dependency trees.
+- The meta-package `KoreForge.Kafka` pulls in all sub-packages. Use individual packages for leaner dependency trees.
 
 ## Installation
 
 ```bash
 # Everything
-dotnet add package KF.Kafka
+dotnet add package KoreForge.Kafka
 
 # Or pick what you need
-dotnet add package KF.Kafka.Consumer
-dotnet add package KF.Kafka.Producer
-dotnet add package KF.Kafka.AdminClient
+dotnet add package KoreForge.Kafka.Consumer
+dotnet add package KoreForge.Kafka.Producer
+dotnet add package KoreForge.Kafka.AdminClient
 ```
 
 ## Configuration
@@ -132,13 +132,13 @@ public class LagMonitor(IKafkaAdminClient admin)
 
 | Package | Description |
 |---|---|
-| `KF.Kafka` | Meta-package — installs all components below |
-| `KF.Kafka.AdminClient` | Read-only admin: topic metadata, consumer-lag, offsets-for-timestamp |
-| `KF.Kafka.Configuration` | Configuration model, profiles, validation, generated factories |
-| `KF.Kafka.Configuration.AspNetCore` | ASP.NET Core integration for configuration |
-| `KF.Kafka.Consumer` | Resilient consumer host with backpressure, routing, pipeline, restart |
-| `KF.Kafka.Core` | Shared runtime records, alert engine, diagnostics |
-| `KF.Kafka.Producer` | Resilient producer with buffering, backpressure, backlog, metrics |
+| `KoreForge.Kafka` | Meta-package — installs all components below |
+| `KoreForge.Kafka.AdminClient` | Read-only admin: topic metadata, consumer-lag, offsets-for-timestamp |
+| `KoreForge.Kafka.Configuration` | Configuration model, profiles, validation, generated factories |
+| `KoreForge.Kafka.Configuration.AspNetCore` | ASP.NET Core integration for configuration |
+| `KoreForge.Kafka.Consumer` | Resilient consumer host with backpressure, routing, pipeline, restart |
+| `KoreForge.Kafka.Core` | Shared runtime records, alert engine, diagnostics |
+| `KoreForge.Kafka.Producer` | Resilient producer with buffering, backpressure, backlog, metrics |
 
 ## Docker Dev Environment
 

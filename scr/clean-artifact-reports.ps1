@@ -19,7 +19,7 @@ $reportFolders = @(
 foreach ($folder in $reportFolders) {
     $path = Join-Path $artifactRoot $folder
     if (Test-Path $path) {
-        Remove-Item -Path $path -Recurse -Force
+        Remove-Item -Path $path -Recurse -Force -ErrorAction SilentlyContinue
     }
     New-Item -Path $path -ItemType Directory -Force | Out-Null
 }

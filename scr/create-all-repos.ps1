@@ -80,9 +80,9 @@ $repos = @(
 # Each entry: @{ Dir = relative path from workspace root; Repo = GitHub repo name }
 $apps = @(
     @{ Dir = 'apps/EventProcessor'; Repo = 'EventProcessor' },
-    @{ Dir = 'KF.Jex.Cli';           Repo = 'KF.Jex.Cli' },
-    @{ Dir = 'KF.Jex.LanguageServer'; Repo = 'KF.Jex.LanguageServer' },
-    @{ Dir = 'KF.Jex.VSCode';         Repo = 'KF.Jex.VSCode' }
+    @{ Dir = 'KoreForge.Jex.Cli';           Repo = 'KoreForge.Jex.Cli' },
+    @{ Dir = 'KoreForge.Jex.LanguageServer'; Repo = 'KoreForge.Jex.LanguageServer' },
+    @{ Dir = 'KoreForge.Jex.VSCode';         Repo = 'KoreForge.Jex.VSCode' }
 )
 
 # ---------------------------------------------------------------------------

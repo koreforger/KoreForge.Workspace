@@ -1,11 +1,11 @@
 ---
 name: koreforge-repo-renovation
-description: "Use when renovating, modernizing, renaming, or rebranding a KoreForge repo, especially retiring KF.* names, fixing csproj/slnx paths, package metadata, namespaces, scripts, docs, tests, and NuGet packaging."
+description: "Use when renovating, modernizing, renaming, or rebranding a KoreForge repo, especially retiring KoreForge.* names, fixing csproj/slnx paths, package metadata, namespaces, scripts, docs, tests, and NuGet packaging."
 ---
 
 # KoreForge Repo Renovation
 
-Use this skill for repo-wide cleanup, rename, modernization, or `KF.*` retirement.
+Use this skill for repo-wide cleanup, rename, modernization, or `KoreForge.*` retirement.
 
 ## Ground Rules
 

@@ -1,6 +1,6 @@
 # KoreForge.OData — API Reference
 
-> Package: `KoreForge.OData` · Assemblies: `KF.OData`, `KF.OData.Generators`
+> Package: `KoreForge.OData` · Assemblies: `KoreForge.OData`, `KoreForge.OData.Generators`
 
 ## Registration
 

@@ -4,7 +4,7 @@
 |---|---|
 | **Package** | `KoreForge.Logging.Serilog` |
 | **Namespace** | `KoreForge.Logging.Serilog` |
-| **Source** | `KoreForge.Logging.Serilog/src/KF.Logging.Serilog/` |
+| **Source** | `KoreForge.Logging.Serilog/src/KoreForge.Logging.Serilog/` |
 | **Dependencies** | KoreForge.Logging, Serilog |
 
 ## Problem

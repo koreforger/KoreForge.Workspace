@@ -69,7 +69,6 @@ $excludedDirNames = @(
     'benchmarkdotnet.artifacts',
     'node_modules',
     '.nuget',
-    'packages',
     'dist'
 )
 

@@ -6,11 +6,11 @@ Multi-assembly package:
 
 | Assembly | Namespace | Contents |
 |----------|-----------|----------|
-| `KF.Processing.Pipeline.dll` | `KoreForge.Processing.Pipeline` | `Pipeline` builder, `IPipeline<TIn,TOut>` |
-| `KF.Processing.Pipeline.Abstractions.dll` | `KoreForge.Processing.Pipeline.Abstractions` | `IPipelineStep<TIn,TOut>`, `IPipelineContext` |
-| `KF.Processing.Flow.dll` | `KoreForge.Processing.Flow` | `Flow` builder, `IFlow<TContext>` |
-| `KF.Processing.Flow.Abstractions.dll` | `KoreForge.Processing.Flow.Abstractions` | `IFlowStage<TContext>`, `IFlowContext` |
-| `KF.Processing.Pipelines.dll` | `KoreForge.Processing.Pipelines` | Built-in pipeline composite types |
+| `KoreForge.Processing.Pipeline.dll` | `KoreForge.Processing.Pipeline` | `Pipeline` builder, `IPipeline<TIn,TOut>` |
+| `KoreForge.Processing.Pipeline.Abstractions.dll` | `KoreForge.Processing.Pipeline.Abstractions` | `IPipelineStep<TIn,TOut>`, `IPipelineContext` |
+| `KoreForge.Processing.Flow.dll` | `KoreForge.Processing.Flow` | `Flow` builder, `IFlow<TContext>` |
+| `KoreForge.Processing.Flow.Abstractions.dll` | `KoreForge.Processing.Flow.Abstractions` | `IFlowStage<TContext>`, `IFlowContext` |
+| `KoreForge.Processing.Pipelines.dll` | `KoreForge.Processing.Pipelines` | Built-in pipeline composite types |
 
 ---
 

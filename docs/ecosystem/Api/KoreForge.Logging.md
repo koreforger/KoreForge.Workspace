@@ -6,9 +6,9 @@ Multi-assembly package:
 
 | Assembly | TFM | Contents |
 |----------|-----|----------|
-| `KF.Logging.Runtime.dll` | `net10.0` | Runtime logging helpers, DI extensions |
-| `KF.Logging.Generator.dll` | `netstandard2.0` | Roslyn source generator |
-| `KF.Logging.Analyzers.dll` | `netstandard2.0` | Roslyn analyzer (duplicate ID detection) |
+| `KoreForge.Logging.Runtime.dll` | `net10.0` | Runtime logging helpers, DI extensions |
+| `KoreForge.Logging.Generator.dll` | `netstandard2.0` | Roslyn source generator |
+| `KoreForge.Logging.Analyzers.dll` | `netstandard2.0` | Roslyn analyzer (duplicate ID detection) |
 
 ---
 

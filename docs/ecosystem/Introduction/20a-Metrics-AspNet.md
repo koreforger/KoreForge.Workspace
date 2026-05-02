@@ -4,8 +4,8 @@
 |---|---|
 | **Package** | `KoreForge.Metrics.AspNet` |
 | **Namespace** | `KoreForge.Metrics.AspNet` |
-| **Source** | `KoreForge.Metrics.AspNet/src/KF.Metrics.AspNet/` |
-| **Tests** | `KoreForge.Metrics.AspNet/tst/KF.Metrics.AspNet.Tests/` |
+| **Source** | `KoreForge.Metrics.AspNet/src/KoreForge.Metrics.AspNet/` |
+| **Tests** | `KoreForge.Metrics.AspNet/tst/KoreForge.Metrics.AspNet.Tests/` |
 | **Dependencies** | KoreForge.Metrics |
 
 ## Problem

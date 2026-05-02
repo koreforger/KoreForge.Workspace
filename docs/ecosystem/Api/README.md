@@ -16,7 +16,7 @@ This folder contains generated API reference documentation for each `KoreForge.*
 | [KoreForge.Kafka.md](KoreForge.Kafka.md) | `KoreForge.Kafka` | Consumer/Producer hosts, `IProducerBuffer`, policies |
 | [KoreForge.Jex.md](KoreForge.Jex.md) | `KoreForge.Jex` | `Jex` class, transform methods |
 | [KoreForge.Web.md](KoreForge.Web.md) | `KoreForge.Web` | Authorization, endpoint builder, `ICurrentUser` |
-| [KoreForge.Settings.md](KoreForge.Settings.md) | `KoreForge.Settings` | `ISettingsService`, `IHistoryService`, `KFSettingsOptions` |
+| [KoreForge.Settings.md](KoreForge.Settings.md) | `KoreForge.Settings` | `ISettingsService`, `IHistoryService`, `KoreForgeSettingsOptions` |
 | [KoreForge.Data.md](KoreForge.Data.md) | `KoreForge.Data` | `AlertsDbContext`, entity model, registration |
 | [KoreForge.OData.md](KoreForge.OData.md) | `KoreForge.OData` | Source generator, attributes, base controller, security |
 | [KoreForge.Json.md](KoreForge.Json.md) | `KoreForge.Json` | `JsonMaterializer`, `RootPropertyClassifier` |
@@ -66,10 +66,10 @@ The .NET SDK writes `{AssemblyName}.xml` alongside the DLL during build.
 **Multi-assembly bundler packages** (Processing, Kafka, Logging): The bundler `.csproj` uses `None Include=...` to explicitly include each sub-assembly's XML file alongside the DLL:
 
 ```xml
-<!-- In KF.Processing.csproj (bundler) -->
+<!-- In KoreForge.Processing.csproj (bundler) -->
 <ItemGroup>
-  <ProcessingAssemblies Include="$(MSBuildThisFileDirectory)..\KF.Processing.Pipelines\bin\$(Configuration)\net10.0\KF.Processing.Pipelines.dll" />
-  <ProcessingAssemblies Include="$(MSBuildThisFileDirectory)..\KF.Processing.Pipelines\bin\$(Configuration)\net10.0\KF.Processing.Pipelines.xml" />
+  <ProcessingAssemblies Include="$(MSBuildThisFileDirectory)..\KoreForge.Processing.Pipelines\bin\$(Configuration)\net10.0\KoreForge.Processing.Pipelines.dll" />
+  <ProcessingAssemblies Include="$(MSBuildThisFileDirectory)..\KoreForge.Processing.Pipelines\bin\$(Configuration)\net10.0\KoreForge.Processing.Pipelines.xml" />
   <!-- ... repeat for each sub-assembly ... -->
 </ItemGroup>
 ```
@@ -90,12 +90,12 @@ The .NET SDK writes `{AssemblyName}.xml` alongside the DLL during build.
 
 ```xml
 <doc>
-  <assembly><name>KF.Time</name></assembly>
+  <assembly><name>KoreForge.Time</name></assembly>
   <members>
-    <member name="T:KF.Time.ISystemClock">
+    <member name="T:KoreForge.Time.ISystemClock">
       <summary>Abstracts the system clock...</summary>
     </member>
-    <member name="P:KF.Time.ISystemClock.UtcNow">
+    <member name="P:KoreForge.Time.ISystemClock.UtcNow">
       <summary>Returns the current UTC time.</summary>
     </member>
   </members>

@@ -1,6 +1,6 @@
 # KoreForge.Json — API Reference
 
-> Package: `KoreForge.Json` · Assemblies: `KF.Json`, `KF.Json.Jex`
+> Package: `KoreForge.Json` · Assemblies: `KoreForge.Json`, `KoreForge.Json.Jex`
 
 Zero KoreForge dependencies.
 
@@ -56,7 +56,7 @@ public sealed class RootPropertyClassifier
 }
 ```
 
-## `ExpandJsonFunction` (KF.Json.Jex)
+## `ExpandJsonFunction` (KoreForge.Json.Jex)
 
 ```csharp
 public sealed class ExpandJsonFunction : IJexFunction

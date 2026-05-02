@@ -22,7 +22,7 @@ These instructions apply to all work in this workspace. Follow them before local
 ## Naming Rules
 
 - KoreForge-owned repos, packages, assemblies, projects, and namespaces should use `KoreForge.*`.
-- `KF.*` is legacy and should be retired when touched.
+- `KoreForge.*` is legacy and should be retired when touched.
 - Event-owned code uses `Event.*` and must not be renamed to `KoreForge.*`.
 - Branches are `main` for stable and `development` for active work.
 

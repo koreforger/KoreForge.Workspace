@@ -35,6 +35,7 @@ $repos = @(
     'KoreForge.Metrics.AspNet',
     'KoreForge.Monitoring',
     'KoreForge.Processing',
+    'KoreForge.Scripts',
     'KoreForge.Settings',
     'KoreForge.Web',
     'KoreForge.Kafka'
@@ -48,7 +49,7 @@ $templateRepos = @(
 $totalPacked = 0
 
 foreach ($repo in $repos) {
-    $repoDir = Join-Path $root (Join-Path 'packages' $repo)
+    $repoDir = Join-Path $root (Join-Path 'eco-system' $repo)
     if (-not (Test-Path $repoDir)) {
         Write-Warning "Repo not found: $repo"
         continue
@@ -62,6 +63,7 @@ foreach ($repo in $repos) {
 
     $artifactsDir = Join-Path $stagingRoot $repo
     $repoBuildRoot = Join-Path $artifactsRoot (Join-Path 'repos' (Join-Path $repo 'build'))
+    $repoBinRoot   = Join-Path $repoBuildRoot 'bin'
     if (Test-Path $artifactsDir) {
         Remove-Item $artifactsDir -Recurse -Force
     }
@@ -77,6 +79,9 @@ foreach ($repo in $repos) {
     $fileVer = "$($parts[0]).$($parts[1]).$($parts[2]).0"
 
     # Use /p:Version to override MinVer, /p:MinVerSkip=true to disable MinVer tag lookup.
+    # KoreForgeComponentBinRoot tells multi-DLL bundling csproj (e.g. KoreForge.Logging)
+    # where --artifacts-path routed the component DLLs; KoreForgeArtifactsConfiguration
+    # must be lowercase to match the artifacts-path directory convention.
     dotnet pack $sln.FullName `
         --configuration Release `
         /p:Version=$Version `
@@ -84,6 +89,8 @@ foreach ($repo in $repos) {
         /p:AssemblyVersion=$asmVer `
         /p:FileVersion=$fileVer `
         /p:ContinuousIntegrationBuild=true `
+        /p:KoreForgeComponentBinRoot=$repoBinRoot `
+        /p:KoreForgeArtifactsConfiguration=release `
         --artifacts-path $repoBuildRoot `
         -o $artifactsDir `
         --no-restore 2>&1
@@ -98,6 +105,8 @@ foreach ($repo in $repos) {
             /p:AssemblyVersion=$asmVer `
             /p:FileVersion=$fileVer `
             /p:ContinuousIntegrationBuild=true `
+            /p:KoreForgeComponentBinRoot=$repoBinRoot `
+            /p:KoreForgeArtifactsConfiguration=release `
             --artifacts-path $repoBuildRoot `
             -o $artifactsDir 2>&1
 
@@ -125,7 +134,7 @@ Write-Host ''
 Write-Host "── Packing templates ──────────────────────────────────" -ForegroundColor Cyan
 
 foreach ($repo in $templateRepos) {
-    $repoDir = Join-Path $root (Join-Path 'packages' $repo)
+    $repoDir = Join-Path $root (Join-Path 'eco-system' $repo)
     if (-not (Test-Path $repoDir)) { Write-Warning "Repo not found: $repo"; continue }
 
     $csproj = Get-ChildItem -Path $repoDir -Filter '*.csproj' -File | Select-Object -First 1

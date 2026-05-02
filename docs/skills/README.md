@@ -10,7 +10,7 @@ Copilot-wide workspace rules live in `.github/copilot-instructions.md`. Concrete
 | --- | --- | --- |
 | Package-only local development | Changing a package and validating consumers without project references or vendored source. | `.github/skills/koreforge-package-development/SKILL.md` |
 | Add a new project or repo | Creating a new package, tool, npm package, or Event app and wiring it into the workspace. | `.github/skills/koreforge-new-project/SKILL.md` |
-| Renovate or rename a package repo | Retiring legacy `KF.*` names, updating projects, namespaces, packages, tests, and docs. | `.github/skills/koreforge-repo-renovation/SKILL.md` |
+| Renovate or rename a package repo | Retiring legacy `KoreForge.*` names, updating projects, namespaces, packages, tests, and docs. | `.github/skills/koreforge-repo-renovation/SKILL.md` |
 | Configure repo scripts for builder | Adding or repairing repo `scr/*.ps1` scripts so the workspace runner discovers them. | `.github/skills/koreforge-builder-scripts/SKILL.md` |
 | Use KoreForge templates | Installing, testing, or extending `dotnet new` templates. | `.github/skills/koreforge-template-authoring/SKILL.md` |
 | Add Event integration or stress tests | Adding realistic Event app validation against Kafka, SQL, and KoreForge packages. | `.github/skills/event-integration-testing/SKILL.md` |

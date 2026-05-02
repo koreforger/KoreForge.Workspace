@@ -1,6 +1,6 @@
 # KoreForge.AppLifecycle — API Reference
 
-**Package**: `KoreForge.AppLifecycle`  |  **Assembly**: `KF.AppLifecycle.dll`  |  **Namespace**: `KoreForge.AppLifecycle`
+**Package**: `KoreForge.AppLifecycle`  |  **Assembly**: `KoreForge.AppLifecycle.dll`  |  **Namespace**: `KoreForge.AppLifecycle`
 
 ---
 

@@ -110,13 +110,13 @@ services.AddScoped<IRowLevelFilterProvider<Order>, TenantOrderFilter>();
 
 | Package | Description |
 |---|---|
-| `KF.RestApi.Common.Abstractions` | Shared contracts, options |
-| `KF.RestApi.Common.Analyzers` | Roslyn rules enforcing layer separation |
-| `KF.RestApi.Common.Observability` | Observability helpers |
-| `KF.RestApi.Common.Persistence` | Audit persistence |
-| `KF.RestApi.Host.Internal` | Internal API host |
-| `KF.Web.Authorization` | Role semantics & authorization |
-| `KF.Web.HealthChecks` | Health check endpoints |
+| `KoreForge.RestApi.Common.Abstractions` | Shared contracts, options |
+| `KoreForge.RestApi.Common.Analyzers` | Roslyn rules enforcing layer separation |
+| `KoreForge.RestApi.Common.Observability` | Observability helpers |
+| `KoreForge.RestApi.Common.Persistence` | Audit persistence |
+| `KoreForge.RestApi.Host.Internal` | Internal API host |
+| `KoreForge.Web.Authorization` | Role semantics & authorization |
+| `KoreForge.Web.HealthChecks` | Health check endpoints |
 
 ## See Also
 

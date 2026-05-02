@@ -52,7 +52,7 @@ if ($LASTEXITCODE -ne 0) { Write-Host "  ERROR: Build failed" -ForegroundColor R
 # ── 5. Start EventReader ───────────────────────────────────────────
 Write-Host "[5/8] Starting EventReader..." -ForegroundColor Yellow
 
-$env:KFSETTINGS_CONNECTIONSTRING = "Server=localhost,14334;Database=StreamingPlatform;User Id=sa;Password=Streaming!Pass123;TrustServerCertificate=true;"
+$env:KOREFORGE_SETTINGS_CONNECTIONSTRING = "Server=localhost,14334;Database=StreamingPlatform;User Id=sa;Password=Streaming!Pass123;TrustServerCertificate=true;"
 $env:ASPNETCORE_URLS = "http://localhost:0"
 $stdoutLog = "$env:TEMP\eventreader-stress-stdout.txt"
 $stderrLog = "$env:TEMP\eventreader-stress-stderr.txt"

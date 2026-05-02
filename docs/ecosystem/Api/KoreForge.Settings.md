@@ -1,21 +1,21 @@
 # KoreForge.Settings — API Reference
 
-> Package: `KoreForge.Settings` · Assemblies: `KF.Settings`, `KF.Settings.Abstractions`, `KF.Settings.Core`, `KF.Settings.Data`, `KF.Settings.Encryption`, `KF.Settings.Metrics`, `KF.Settings.Cli`
+> Package: `KoreForge.Settings` · Assemblies: `KoreForge.Settings`, `KoreForge.Settings.Abstractions`, `KoreForge.Settings.Core`, `KoreForge.Settings.Data`, `KoreForge.Settings.Encryption`, `KoreForge.Settings.Metrics`, `KoreForge.Settings.Cli`
 
 ## Registration
 
 ```csharp
 // Configuration source
-builder.Configuration.AddKFSettings(Action<KFSettingsOptions> configure)
+builder.Configuration.AddKoreForgeSettings(Action<KoreForgeSettingsOptions> configure)
 
 // DI services
-builder.Services.AddKFSettingsServices(IConfiguration configuration)
+builder.Services.AddKoreForgeSettingsServices(IConfiguration configuration)
 ```
 
-## `KFSettingsOptions`
+## `KoreForgeSettingsOptions`
 
 ```csharp
-public sealed class KFSettingsOptions
+public sealed class KoreForgeSettingsOptions
 {
     public string ConnectionString { get; set; }
     public string? ApplicationId { get; set; }
@@ -86,15 +86,15 @@ public interface IHealthReporter
 
 ## Connection String Resolution
 
-1. `KFSettingsOptions.ConnectionString`
-2. `ConnectionStrings:KFSettings`
+1. `KoreForgeSettingsOptions.ConnectionString`
+2. `ConnectionStrings:KoreForgeSettings`
 3. `KF:Settings:ConnectionString`
 4. `KF_SETTINGS_CONNECTIONSTRING` environment variable
 
 ## CLI Tool
 
 ```
-kf-settings list|get|set|delete|history|rollback|export|import
+koreforge-settings list|get|set|delete|history|rollback|export|import
   --application <id>
   --connection <connstr>
   --key <key>

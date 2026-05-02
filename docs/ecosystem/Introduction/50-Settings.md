@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Package** | `KoreForge.Settings` (meta), `KF.Settings`, `KF.Settings.Abstractions`, `KF.Settings.Core`, `KF.Settings.Data`, `KF.Settings.Encryption`, `KF.Settings.Metrics`, `KoreForge.Settings.Cli` |
+| **Package** | `KoreForge.Settings` (meta), `KoreForge.Settings`, `KoreForge.Settings.Abstractions`, `KoreForge.Settings.Core`, `KoreForge.Settings.Data`, `KoreForge.Settings.Encryption`, `KoreForge.Settings.Metrics`, `KoreForge.Settings.Cli` |
 | **Namespace** | `KoreForge.Settings.*` |
 | **Source** | `KoreForge.Settings/src/` |
 | **Tests** | `KoreForge.Settings/tst/` |
@@ -41,7 +41,7 @@ dotnet tool install -g KoreForge.Settings.Cli
 var builder = WebApplication.CreateBuilder(args);
 
 // 1. Add KF Settings as a configuration source
-builder.Configuration.AddKFSettings(opts =>
+builder.Configuration.AddKoreForgeSettings(opts =>
 {
     opts.ApplicationId = "my-app";
     opts.PollingInterval = TimeSpan.FromSeconds(30);
@@ -49,15 +49,15 @@ builder.Configuration.AddKFSettings(opts =>
 });
 
 // 2. Register services
-builder.Services.AddKFSettingsServices(builder.Configuration);
+builder.Services.AddKoreForgeSettingsServices(builder.Configuration);
 ```
 
 ## Connection String Resolution
 
 The connection string is resolved in priority order:
 
-1. `KFSettingsOptions.ConnectionString` — set directly in code
-2. `ConnectionStrings:KFSettings` — from `appsettings.json`
+1. `KoreForgeSettingsOptions.ConnectionString` — set directly in code
+2. `ConnectionStrings:KoreForgeSettings` — from `appsettings.json`
 3. `KF:Settings:ConnectionString` — from configuration
 4. `KF_SETTINGS_CONNECTIONSTRING` — environment variable
 
@@ -110,30 +110,30 @@ app.MapGet("/health/settings", (IHealthReporter health) =>
     new { health.LastSuccessfulReloadUtc, health.ConsecutiveFailures, health.LastRowCount });
 ```
 
-## CLI Tool — `kf-settings`
+## CLI Tool — `koreforge-settings`
 
 ```bash
-kf-settings list     --application my-app --connection "Server=...;Database=...;"
-kf-settings get      --application my-app --key "Feature:Enabled"
-kf-settings set      --application my-app --key "Feature:Enabled" --value "true"
-kf-settings delete   --application my-app --key "Feature:Enabled"
-kf-settings history  --application my-app --key "Feature:Enabled"
-kf-settings rollback --application my-app --key "Feature:Enabled" --version 2
-kf-settings export   --application my-app > settings.json
-kf-settings import   --application my-app < settings.json
+koreforge-settings list     --application my-app --connection "Server=...;Database=...;"
+koreforge-settings get      --application my-app --key "Feature:Enabled"
+koreforge-settings set      --application my-app --key "Feature:Enabled" --value "true"
+koreforge-settings delete   --application my-app --key "Feature:Enabled"
+koreforge-settings history  --application my-app --key "Feature:Enabled"
+koreforge-settings rollback --application my-app --key "Feature:Enabled" --version 2
+koreforge-settings export   --application my-app > settings.json
+koreforge-settings import   --application my-app < settings.json
 ```
 
 ## Sub-Packages
 
 | Package | Description |
 |---|---|
-| `KF.Settings` | Configuration provider, hot-reload background service |
-| `KF.Settings.Abstractions` | Models, interfaces, options |
-| `KF.Settings.Core` | `SettingsService`, `HistoryService`, binary accessor |
-| `KF.Settings.Data` | EF Core `KFSettingsDbContext` |
-| `KF.Settings.Encryption` | `IEncryptionProvider` contract + `NoOpEncryptionProvider` |
-| `KF.Settings.Metrics` | In-memory metrics recorder for reload operations |
-| `KF.Settings.Cli` | CLI tool |
+| `KoreForge.Settings` | Configuration provider, hot-reload background service |
+| `KoreForge.Settings.Abstractions` | Models, interfaces, options |
+| `KoreForge.Settings.Core` | `SettingsService`, `HistoryService`, binary accessor |
+| `KoreForge.Settings.Data` | EF Core `KoreForgeSettingsDbContext` |
+| `KoreForge.Settings.Encryption` | `IEncryptionProvider` contract + `NoOpEncryptionProvider` |
+| `KoreForge.Settings.Metrics` | In-memory metrics recorder for reload operations |
+| `KoreForge.Settings.Cli` | CLI tool |
 
 ## See Also
 

@@ -290,7 +290,7 @@ Packs templates through the workspace artifact policy. Package output belongs un
 
 ## NuGet Integration Test Scripts
 
-Located in `KF.Nuget.Integration.Tests/scr/`.
+Located in `KoreForge.Nuget.Integration.Tests/scr/`.
 
 ### Build-Integration.ps1
 
@@ -310,14 +310,14 @@ Installs specific versions of KoreForge packages into the integration test proje
 
 | Tool | Package | Description |
 |---|---|---|
-| `kf-settings` | `KoreForge.Settings.Cli` | Manage SQL-backed settings: list, get, set, delete, history, rollback, export, import |
-| `jex` | `KF.Jex.Cli` | Evaluate JEX expressions from the command line, pipe JSON, use as a build/CI tool |
+| `koreforge-settings` | `KoreForge.Settings.Cli` | Manage SQL-backed settings: list, get, set, delete, history, rollback, export, import |
+| `jex` | `KoreForge.Jex.Cli` | Evaluate JEX expressions from the command line, pipe JSON, use as a build/CI tool |
 
 Install globally:
 
 ```bash
 dotnet tool install -g KoreForge.Settings.Cli
-dotnet tool install -g KF.Jex.Cli
+dotnet tool install -g KoreForge.Jex.Cli
 ```
 
 See [50-Settings.md](50-Settings.md) and [11a-Jex-Cli.md](11a-Jex-Cli.md) for full CLI documentation.

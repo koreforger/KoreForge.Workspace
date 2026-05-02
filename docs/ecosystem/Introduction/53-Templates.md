@@ -24,18 +24,18 @@ dotnet new install KoreForge.Templates
 
 | Short Name | Type | Description |
 |---|---|---|
-| `kf-kafka-processor` | Solution | Kafka consumer with Vue 3 dashboard, SignalR metrics, SQL live-reload settings, structured logging, health checks |
-| `kf-data` | Solution | EF Core data library with database-first scaffolding, partial DbContext, options, and DI registration |
-| `kf-odata` | Solution | OData controller library with Roslyn source-generated CRUD controllers from a DbContext |
+| `koreforge-kafka-processor` | Solution | Kafka consumer with Vue 3 dashboard, SignalR metrics, SQL live-reload settings, structured logging, health checks |
+| `koreforge-data` | Solution | EF Core data library with database-first scaffolding, partial DbContext, options, and DI registration |
+| `koreforge-odata` | Solution | OData controller library with Roslyn source-generated CRUD controllers from a DbContext |
 
 ---
 
-## kf-kafka-processor
+## koreforge-kafka-processor
 
 Creates a full Kafka consumer application with dashboard.
 
 ```powershell
-dotnet new kf-kafka-processor -n MyApp --KafkaTopic orders --DatabaseName OrderDb
+dotnet new koreforge-kafka-processor -n MyApp --KafkaTopic orders --DatabaseName OrderDb
 ```
 
 ### Parameters
@@ -58,12 +58,12 @@ dotnet new kf-kafka-processor -n MyApp --KafkaTopic orders --DatabaseName OrderD
 
 ---
 
-## kf-data
+## koreforge-data
 
 Creates an EF Core data library using database-first scaffolding.
 
 ```powershell
-dotnet new kf-data -n MyCompany.Data.Staff --DatabaseShort Staff
+dotnet new koreforge-data -n MyCompany.Data.Staff --DatabaseShort Staff
 ```
 
 ### Parameters
@@ -80,12 +80,12 @@ dotnet new kf-data -n MyCompany.Data.Staff --DatabaseShort Staff
 
 ---
 
-## kf-odata
+## koreforge-odata
 
 Creates an OData controller library with source-generated CRUD endpoints.
 
 ```powershell
-dotnet new kf-odata -n MyCompany.OData.Staff --DatabaseShort Staff --DataNamespace MyCompany.Data.Staff
+dotnet new koreforge-odata -n MyCompany.OData.Staff --DatabaseShort Staff --DataNamespace MyCompany.Data.Staff
 ```
 
 ### Parameters
@@ -94,7 +94,7 @@ dotnet new kf-odata -n MyCompany.OData.Staff --DatabaseShort Staff --DataNamespa
 |---|---|---|
 | `-n` | _(required)_ | Project name and namespace |
 | `--DatabaseShort` | `Alerts` | Short name matching Data library (e.g. `Staff` → `StaffDbContext`) |
-| `--DataNamespace` | `KF.Data.Alerts` | Full namespace of the Data library where the DbContext lives |
+| `--DataNamespace` | `KoreForge.Data.Alerts` | Full namespace of the Data library where the DbContext lives |
 
 ### Post-Scaffold Steps
 
@@ -108,9 +108,9 @@ dotnet new kf-odata -n MyCompany.OData.Staff --DatabaseShort Staff --DataNamespa
 
 | Template | Source Location |
 |---|---|
-| `kf-kafka-processor` | `apps/EventProcessor/` — the live app IS the template (golden master) |
-| `kf-data` | `templates/kf-data/` — standalone template archetype |
-| `kf-odata` | `templates/kf-odata/` — standalone template archetype |
+| `koreforge-kafka-processor` | `apps/EventProcessor/` — the live app IS the template (golden master) |
+| `koreforge-data` | `templates/koreforge-data/` — standalone template archetype |
+| `koreforge-odata` | `templates/koreforge-odata/` — standalone template archetype |
 
 ## Local Development
 
@@ -119,7 +119,7 @@ dotnet new kf-odata -n MyCompany.OData.Staff --DatabaseShort Staff --DataNamespa
 ./scr/install-local.ps1
 
 # Test 
-dotnet new kf-data -n TestData --DatabaseShort Test -o /tmp/TestData
+dotnet new koreforge-data -n TestData --DatabaseShort Test -o /tmp/TestData
 
 # Uninstall
 ./scr/uninstall-local.ps1

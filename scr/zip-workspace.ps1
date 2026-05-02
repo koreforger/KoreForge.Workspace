@@ -71,7 +71,7 @@ if (-not $SkipClean) {
     Write-Host ''
 
     # Clean ALL child directories, not just KoreForge.* — the workspace also
-    # contains apps/, KF.Jex.Cli/, KF.Jex.VSCode/, KF.Nuget.Integration.Tests/ etc.
+    # contains apps/, KoreForge.Jex.Cli/, KoreForge.Jex.VSCode/, KoreForge.Nuget.Integration.Tests/ etc.
     $repos = Get-ChildItem -Path $WorkspaceRoot -Directory |
              Where-Object { $_.Name -ne '.git' -and $_.Name -ne '.vscode' -and $_.Name -ne '.github' }
 
@@ -136,16 +136,46 @@ if (-not $SkipZip) {
     Write-Host "  Archive : $archivePath"   -ForegroundColor DarkGray
     Write-Host ''
 
-    # Compress-Archive does not support piped paths with -DestinationPath into parent if the
-    # parent directory is the same as source; use .NET directly for reliability.
+    Add-Type -AssemblyName System.IO.Compression
     Add-Type -AssemblyName System.IO.Compression.FileSystem
 
-    [System.IO.Compression.ZipFile]::CreateFromDirectory(
-        $WorkspaceRoot,
-        $archivePath,
-        [System.IO.Compression.CompressionLevel]::Optimal,
-        $false   # includeBaseDirectory
-    )
+    $skippedCount = 0
+    $zipStream = [System.IO.File]::Open($archivePath, [System.IO.FileMode]::Create)
+    try {
+        $zip = New-Object System.IO.Compression.ZipArchive($zipStream, [System.IO.Compression.ZipArchiveMode]::Create, $false)
+        try {
+            Get-ChildItem -Path $WorkspaceRoot -Recurse -File -Force | ForEach-Object {
+                $fullPath = $_.FullName
+                if ($fullPath -eq $archivePath) { return }
+                $entryName = [System.IO.Path]::GetRelativePath($WorkspaceRoot, $fullPath).Replace('\', '/')
+                try {
+                    $entry = $zip.CreateEntry($entryName, [System.IO.Compression.CompressionLevel]::Optimal)
+                    $entryStream = $entry.Open()
+                    try {
+                        $fileStream = [System.IO.File]::Open($fullPath, [System.IO.FileMode]::Open, [System.IO.FileAccess]::Read, [System.IO.FileShare]::ReadWrite)
+                        try {
+                            $fileStream.CopyTo($entryStream)
+                        } finally {
+                            $fileStream.Dispose()
+                        }
+                    } finally {
+                        $entryStream.Dispose()
+                    }
+                } catch {
+                    Write-Verbose "  Skipping locked file: $entryName"
+                    $skippedCount++
+                }
+            }
+        } finally {
+            $zip.Dispose()
+        }
+    } finally {
+        $zipStream.Dispose()
+    }
+
+    if ($skippedCount -gt 0) {
+        Write-Host "  Skipped $skippedCount locked file(s)." -ForegroundColor DarkYellow
+    }
 
     $sizeMB = [math]::Round((Get-Item $archivePath).Length / 1MB, 1)
     Write-Host "  Created $archiveName ($sizeMB MB)" -ForegroundColor Green

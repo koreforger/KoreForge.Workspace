@@ -4,8 +4,8 @@
 |---|---|
 | **Package** | `KoreForge.Metrics` |
 | **Namespace** | `KoreForge.Metrics` |
-| **Source** | `KoreForge.Metrics/src/KF.Metrics/` |
-| **Tests** | `KoreForge.Metrics/tst/KF.Metrics.Tests/` |
+| **Source** | `KoreForge.Metrics/src/KoreForge.Metrics/` |
+| **Tests** | `KoreForge.Metrics/tst/KoreForge.Metrics.Tests/` |
 | **Dependencies** | KoreForge.Time |
 
 ## Problem

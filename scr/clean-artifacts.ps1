@@ -10,10 +10,12 @@ $ErrorActionPreference = 'Stop'
 $artifactRoot = Join-Path $WorkspaceRoot 'artifacts'
 
 if (Test-Path $artifactRoot) {
-    Remove-Item -Path $artifactRoot -Recurse -Force
+    Get-ChildItem -Path $artifactRoot -Directory |
+        Where-Object { $_.Name -notin @('script-runner', 'nuget-cache') } |
+        ForEach-Object { Remove-Item -Path $_.FullName -Recurse -Force -ErrorAction SilentlyContinue }
 }
 
-$repoRoots = @('packages', 'tools', 'event', 'npm') |
+$repoRoots = @('eco-system', 'tools', 'event', 'eco-web') |
     ForEach-Object { Join-Path $WorkspaceRoot $_ } |
     Where-Object { Test-Path $_ }
 

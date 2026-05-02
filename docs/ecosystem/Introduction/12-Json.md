@@ -4,8 +4,8 @@
 |---|---|
 | **Package** | `KoreForge.Json` |
 | **Namespace** | `KoreForge.Json` |
-| **Source** | `KoreForge.Json/src/KF.Json/` |
-| **Tests** | `KoreForge.Json/tst/KF.Json.Tests/` |
+| **Source** | `KoreForge.Json/src/KoreForge.Json/` |
+| **Tests** | `KoreForge.Json/tst/KoreForge.Json.Tests/` |
 | **Dependencies** | None |
 
 ## Problem

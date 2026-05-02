@@ -1,6 +1,6 @@
 # KoreForge.Data — API Reference
 
-> Package: `KoreForge.Data` · Assembly: `KF.Data`
+> Package: `KoreForge.Data` · Assembly: `KoreForge.Data`
 
 ## Registration
 
@@ -26,19 +26,19 @@ public sealed class AlertsDbOptions
 
 ## `AlertsDbContext`
 
-EF Core `DbContext` with scaffolded entities. Extend via partial class in `src/KF.Data/AlertsDbContext.cs`.
+EF Core `DbContext` with scaffolded entities. Extend via partial class in `src/KoreForge.Data/AlertsDbContext.cs`.
 
 ### Entity Sets
 
 | DbSet | Entity Type | Namespace |
 |-------|------------|-----------|
-| `NotificationOutboxes` | `NotificationOutbox` | `KF.Data.Alerts.Notification` |
-| `EmailPayloads` | `EmailPayload` | `KF.Data.Alerts.Notification` |
-| `SmsPayloads` | `SmsPayload` | `KF.Data.Alerts.Notification` |
-| `Channels` | `Channel` | `KF.Data.Alerts.Notification` |
-| `Priorities` | `Priority` | `KF.Data.Alerts.Notification` |
-| `OutboxStatuses` | `OutboxStatus` | `KF.Data.Alerts.Notification` |
-| `SendOutcomes` | `SendOutcome` | `KF.Data.Alerts.Notification` |
+| `NotificationOutboxes` | `NotificationOutbox` | `KoreForge.Data.Alerts.Notification` |
+| `EmailPayloads` | `EmailPayload` | `KoreForge.Data.Alerts.Notification` |
+| `SmsPayloads` | `SmsPayload` | `KoreForge.Data.Alerts.Notification` |
+| `Channels` | `Channel` | `KoreForge.Data.Alerts.Notification` |
+| `Priorities` | `Priority` | `KoreForge.Data.Alerts.Notification` |
+| `OutboxStatuses` | `OutboxStatus` | `KoreForge.Data.Alerts.Notification` |
+| `SendOutcomes` | `SendOutcome` | `KoreForge.Data.Alerts.Notification` |
 
 ### `NotificationOutbox`
 
@@ -59,5 +59,5 @@ Core entity with foreign keys to all lookup tables, retry tracking, and timestam
 .\scr\scaffold.ps1
 ```
 
-Generated code lives in `src/KF.Data/Generated/` — do not edit.
+Generated code lives in `src/KoreForge.Data/Generated/` — do not edit.
 
