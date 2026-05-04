@@ -46,7 +46,7 @@ Write-Host "  Group=$groupId, offset=latest" -ForegroundColor Green
 
 # ── 4. Build EventReader ───────────────────────────────────────────
 Write-Host "[4/8] Building EventReader..." -ForegroundColor Yellow
-dotnet build "$repoRoot/apps/EventReader/src/EventReader/EventReader.csproj" -c Release --nologo 2>&1 | Select-String "Build succeeded|error CS" | ForEach-Object { Write-Host "  $_" }
+dotnet build "$repoRoot/event/Event.Reader/src/EventReader/EventReader.csproj" -c Release --nologo 2>&1 | Select-String "Build succeeded|error CS" | ForEach-Object { Write-Host "  $_" }
 if ($LASTEXITCODE -ne 0) { Write-Host "  ERROR: Build failed" -ForegroundColor Red; exit 1 }
 
 # ── 5. Start EventReader ───────────────────────────────────────────
@@ -58,7 +58,7 @@ $stdoutLog = "$env:TEMP\eventreader-stress-stdout.txt"
 $stderrLog = "$env:TEMP\eventreader-stress-stderr.txt"
 
 $proc = Start-Process -FilePath "dotnet" `
-    -ArgumentList "run --project `"$repoRoot/apps/EventReader/src/EventReader/EventReader.csproj`" -c Release --no-build" `
+    -ArgumentList "run --project `"$repoRoot/event/Event.Reader/src/EventReader/EventReader.csproj`" -c Release --no-build" `
     -PassThru -NoNewWindow -RedirectStandardOutput $stdoutLog -RedirectStandardError $stderrLog
 
 Write-Host "  PID: $($proc.Id), waiting ${ConsumerStartupWaitSec}s for consumer startup..." -ForegroundColor Yellow

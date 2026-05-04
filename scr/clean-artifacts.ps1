@@ -10,9 +10,15 @@ $ErrorActionPreference = 'Stop'
 $artifactRoot = Join-Path $WorkspaceRoot 'artifacts'
 
 if (Test-Path $artifactRoot) {
+    # Remove subdirectories (except preserved caches)
     Get-ChildItem -Path $artifactRoot -Directory |
         Where-Object { $_.Name -notin @('script-runner', 'nuget-cache') } |
         ForEach-Object { Remove-Item -Path $_.FullName -Recurse -Force -ErrorAction SilentlyContinue }
+
+    # Remove loose generated files at the artifacts root (binlogs, test-run captures, logs)
+    Get-ChildItem -Path $artifactRoot -File |
+        Where-Object { $_.Extension -in @('.binlog', '.txt', '.log') } |
+        ForEach-Object { Remove-Item -Path $_.FullName -Force -ErrorAction SilentlyContinue }
 }
 
 $repoRoots = @('eco-system', 'tools', 'event', 'eco-web') |

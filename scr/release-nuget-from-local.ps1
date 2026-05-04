@@ -42,7 +42,7 @@ Write-Host "   Version : $Version" -ForegroundColor Cyan
 Write-Host ''
 
 # ── API key ───────────────────────────────────────────────────────────────────
-$keyFile = Join-Path $root 'nuget-api.key.txt'
+$keyFile = Join-Path $root '.local\secrets\nuget-api.key.txt'
 if (-not (Test-Path $keyFile)) {
     throw "NuGet API key file not found: $keyFile"
 }

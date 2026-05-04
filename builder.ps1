@@ -143,6 +143,7 @@ function Get-SystemScriptDescription {
         "pack-all.ps1"                { "Pack all library repositories using the legacy pack-all workflow."; break }
         "release-nuget-from-github.ps1" { "Tag and push a NuGet release through GitHub automation."; break }
         "release-nuget-from-local.ps1"  { "Publish NuGet packages from the local artifact feed."; break }
+        "build-book.ps1"              { "Generate the KoreForge Ecosystem Reference PDF book."; break }
         "zip-compact-workspace.ps1"   { "Create a compact workspace archive under artifacts/zips."; break }
         "zip-workspace.ps1"           { "Create a full workspace archive under artifacts/zips."; break }
         default                        { "Run workspace script: $DisplayName." }

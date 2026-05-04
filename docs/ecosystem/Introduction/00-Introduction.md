@@ -1,6 +1,6 @@
 # KoreForge
 
-> **Version**: 0.0.6-alpha · **.NET 10** · MIT License
+> **.NET 10** · MIT License
 > Packages on [nuget.org/profiles/koreforger](https://www.nuget.org/profiles/koreforger)
 
 ## What is KoreForge?
