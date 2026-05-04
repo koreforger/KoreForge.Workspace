@@ -15,7 +15,8 @@ This inventory classifies the current markdown files by standard document type. 
 | `docs/ecosystem/naming.md` | Structure | Naming and package identity rules. |
 | `docs/ecosystem/build-and-release.md` | Developer guide | Build, pack, release, artifacts, branch rules. |
 | `docs/development/docker.md` | Developer guide, structure | Local infrastructure workflow. |
-| `docs/ecosystem/monitoring-shell-spec.md` | Specification | Monitoring shell requirements. |
+| `docs/ecosystem/monitoring-shell-spec.md` | Specification | Monitoring shell DTO contracts and capability registry. |
+| `docs/ecosystem/frontend-spec.md` | Specification | Workspace-wide front-end + supporting back-end architecture. |
 | `docs/ecosystem/KoreForge-Documentation.md` | User guide | Combined ecosystem narrative/reference, currently generated. |
 | `docs/ecosystem/KoreForge-Developer-Guide.md` | Developer guide | Ecosystem contributor guide. |
 | `docs/ecosystem/Introduction/*.md` | User guide, structure | Publish-ordered introduction docs. |
@@ -51,7 +52,15 @@ This inventory classifies the current markdown files by standard document type. 
 | KoreForge.Jex.LanguageServer | None yet | None yet | `README.md` | None yet | None yet |
 | KoreForge.Jex.VSCodeExtension | None yet | None yet | `README.md`, `MARKETPLACE.md` | None yet | Extension package layout |
 | KoreForge.NuGet.IntegrationTests | None yet | None yet | `README.md` | None yet | Contains copied docs under `doc/` and `docs/`; needs pruning or classification |
-| KoreForge.Scripts.Vue | `doc/Specification.md` | None yet | `README.md` | None yet | None yet |
+
+## Front-End Repos (eco-web)
+
+| Repo | Specification | Detailed design | User guide | Developer guide | Structure or notes |
+| --- | --- | --- | --- | --- | --- |
+| KoreForge.Monitoring.Shell | `doc/specification.md` | None yet | `README.md` | None yet | None yet |
+| KoreForge.Scripts.Vue | `doc/specification.md` | None yet | `README.md` | None yet | None yet |
+| KoreForge.Jex.Vue | `doc/specification.md` | None yet | `README.md` | None yet | Implementation not started |
+| KoreForge.Kafka.Vue | `doc/specification.md` | None yet | `README.md` | None yet | Implementation not started |
 
 ## Event Repos
 
