@@ -26,6 +26,17 @@ These instructions apply to all work in this workspace. Follow them before local
 - Event-owned code uses `Event.*` and must not be renamed to `KoreForge.*`.
 - Branches are `main` for stable and `development` for active work.
 
+## File Content Rules
+
+- Every source file must contain exactly one top-level type: one class, one record, one enum, one interface, or one struct. No file may contain multiple top-level type declarations.
+- The file name must exactly match the single type it contains (e.g. `OrderService.cs` contains only `class OrderService`).
+
+## File Naming Consistency Rules
+
+- Before creating any file, look at files of the same kind already in the repo and adopt the exact same naming pattern. Do not invent a new pattern if one already exists.
+- The word order in a filename establishes the pattern for that category. Once established, all files in that category follow the same word order. Examples: if publish workflows are named `publish-nuget.yml`, a new npm publish workflow must be `publish-npm.yml` — not `npm-publish.yml`. If scripts are named `build-test.ps1`, a new coverage script is `build-coverage.ps1` — not `coverage-build.ps1`.
+- After creating or renaming any file, explicitly verify that its name and location match the established pattern for that file type in this workspace.
+
 ## Build And Script Rules
 
 - Use `builder.ps1` for interactive script discovery.
