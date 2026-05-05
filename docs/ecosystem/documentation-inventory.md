@@ -43,6 +43,7 @@ This inventory classifies the current markdown files by standard document type. 
 | KoreForge.Templates | None yet | None yet | `README.md`, template READMEs | None yet | Template folder layouts |
 | KoreForge.Time | None yet | None yet | `README.md` | None yet | None yet |
 | KoreForge.Web | `doc/3. Specification.md` | `doc/2. Prompt and Analyzer.md` | `README.md` | None yet | `doc/1. Rough idea and specifications.md`, `doc/versioning-guide.md`, analyzer release manifests |
+| KoreForge.SwaggerControllers | `doc/specification.md` | None yet | `README.md` | None yet | `doc/notes/implementation-plan.md` |
 
 ## Tooling Repos
 
@@ -71,6 +72,15 @@ This inventory classifies the current markdown files by standard document type. 
 | Event.Reader | None yet | `EventReader-Message-Processing-Architecture.md` | Copied AppLifecycle docs | Copied AppLifecycle docs | Needs Event-specific docs |
 | Event.Streaming | None yet | None yet | `README.md` | None yet | None yet |
 | Event.Writer | `docs/configurable_json_to_sql_writer_spec.md` | None yet | None yet | None yet | None yet |
+| Event.FraudIntegration.Data (private) | `doc/specification.md` | None yet | `README.md` | None yet | `doc/notes/implementation-plan.md` |
+| EWorkspace-Cross-Cutting Specs
+
+| Document | Type | Notes |
+| --- | --- | --- |
+| `docs/ecosystem/specifications/swagger-controllers.md` | Specification | 4-repo interaction: KoreForge.SwaggerControllers + Event.FraudIntegration.Data + Event.FraudIntegrationControllers + Event.ApiHost. |
+
+## vent.FraudIntegrationControllers (private) | `doc/specification.md` | None yet | `README.md` | None yet | `doc/notes/implementation-plan.md` |
+| Event.ApiHost | `doc/specification.md` | None yet | `README.md` | None yet | `doc/notes/implementation-plan.md` |
 
 ## Cleanup Priorities
 

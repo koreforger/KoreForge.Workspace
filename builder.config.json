@@ -25,7 +25,8 @@
         "eco-system/KoreForge.Settings",
         "eco-system/KoreForge.Scripts",
         "eco-system/KoreForge.Monitoring",
-        "eco-system/KoreForge.Templates"
+        "eco-system/KoreForge.Templates",
+        "eco-system/KoreForge.SwaggerControllers"
       ]
     },
     {
@@ -54,6 +55,14 @@
         "event/Event.Reader",
         "event/Event.Benchmarks",
         "event/Event.Writer"
+      ]
+    },
+    {
+      "name": "Event apis",
+      "paths": [
+        "event/Event.FraudIntegration.Data",
+        "event/Event.FraudIntegrationControllers",
+        "event/Event.ApiHost"
       ]
     }
   ]
