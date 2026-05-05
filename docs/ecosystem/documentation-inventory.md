@@ -11,6 +11,7 @@ This inventory classifies the current markdown files by standard document type. 
 | `docs/ecosystem/documentation-standard.md` | Structure | Canonical documentation taxonomy. |
 | `docs/ecosystem/documentation-inventory.md` | Structure | This inventory. |
 | `docs/skills/README.md` | Developer guide | Human and LLM skill catalog. |
+| `.github/skills/parse-swagger/SKILL.md` | Skill | Stage-1 of KoreForge.SwaggerControllers: Swagger 2.0 → metadata.json. References under `references/`. |
 | `docs/ecosystem/layout.md` | Structure | Workspace grouping and dependency rule. |
 | `docs/ecosystem/naming.md` | Structure | Naming and package identity rules. |
 | `docs/ecosystem/build-and-release.md` | Developer guide | Build, pack, release, artifacts, branch rules. |
