@@ -44,7 +44,7 @@ This inventory classifies the current markdown files by standard document type. 
 | KoreForge.Templates | None yet | None yet | `README.md`, template READMEs | None yet | Template folder layouts |
 | KoreForge.Time | None yet | None yet | `README.md` | None yet | None yet |
 | KoreForge.Web | `doc/3. Specification.md` | `doc/2. Prompt and Analyzer.md` | `README.md` | None yet | `doc/1. Rough idea and specifications.md`, `doc/versioning-guide.md`, analyzer release manifests |
-| KoreForge.SwaggerControllers | `doc/specification.md` | None yet | `README.md` | None yet | `doc/notes/implementation-plan.md` |
+| KoreForge.SwaggerControllers | `doc/specification.md` | None yet | `doc/user-guide.md` | `doc/developer-guide.md` | `doc/structure.md`, `doc/notes/implementation-plan.md` |
 
 ## Tooling Repos
 
