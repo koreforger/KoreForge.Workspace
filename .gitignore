@@ -21,6 +21,9 @@ BenchmarkDotNet.Artifacts/
 coverage-report/
 .vs/
 
+# Local scratch
+temp/
+
 # Node
 node_modules/
 dist/
