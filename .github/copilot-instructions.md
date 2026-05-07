@@ -77,7 +77,12 @@ The following SKILL.md files encode correct usage patterns for each KoreForge li
 | `koreforge-kafka` | Kafka producer, consumer, or admin client integration |
 | `koreforge-odata` | OData endpoints, `[ODataAuthorize]`, `[ODataIgnore]`, row-level filters |
 | `koreforge-data` | EF Core scaffold, `Generated/` rules, partial class extensions, lookup tables |
-| `koreforge-web` | Multi-layer RestApi scaffold (External/Domain/Internal/Client), Refit rules |
+| `koreforge-web` | **Router** for KoreForge.Web work — pick the right sub-skill below |
+| `koreforge-web-restapi-layers` | Multi-layer RestApi scaffold (External/Domain/Internal/Client), Refit rules, API001–API007 analyzers, audit |
+| `koreforge-web-authorization` | **Router** for KoreForge.Web.Authorization — choose attribute vs dynamic flavor |
+| `koreforge-web-authorization-attribute` | Static `[RolesAuthorize]` + `IContextAuthorizationCondition` on MVC controllers |
+| `koreforge-web-authorization-dynamic` | Runtime-mutable `MethodPermissionRule` + `PermissionsAuthorizationMiddleware`, custom stores |
+| `koreforge-web-healthchecks` | `MapKfHealthEndpoints`, `HealthTags` (Ready/Live/Sql/Kafka), K8s probes |
 | `koreforge-processing` | `PipelineBuilder`, `BatchPipelineExecutor`, `IPipelineStep` |
 | `koreforge-json` | `RootPropertyClassifier`, `JsonMaterializer.Expand` |
 | `koreforge-time` | `ISystemClock`, `VirtualSystemClock` — never use `DateTime.UtcNow` directly |
