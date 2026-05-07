@@ -63,3 +63,24 @@ These instructions apply to all work in this workspace. Follow them before local
 - Do not revert user changes unless explicitly asked.
 - Do not run destructive git commands unless explicitly asked.
 - Commit only when the user asks or when the current workflow clearly includes committing/pushing repository changes.
+
+## KoreForge Package Skills
+
+The following SKILL.md files encode correct usage patterns for each KoreForge library. Load the relevant skill before implementing any feature that touches these libraries.
+
+| Skill name | Trigger |
+|------------|---------|
+| `koreforge-logging` | Adding or fixing structured logging; never use `ILogger<T>` directly |
+| `koreforge-metrics` | Adding `IOperationMonitor` instrumentation, snapshot endpoint |
+| `koreforge-applifecycle` | Startup flows, shutdown flows, scheduled flows, lifecycle events |
+| `koreforge-settings` | SQL-backed live-reload config, `ISettingsService`, `IHistoryService` |
+| `koreforge-kafka` | Kafka producer, consumer, or admin client integration |
+| `koreforge-odata` | OData endpoints, `[ODataAuthorize]`, `[ODataIgnore]`, row-level filters |
+| `koreforge-data` | EF Core scaffold, `Generated/` rules, partial class extensions, lookup tables |
+| `koreforge-web` | Multi-layer RestApi scaffold (External/Domain/Internal/Client), Refit rules |
+| `koreforge-processing` | `PipelineBuilder`, `BatchPipelineExecutor`, `IPipelineStep` |
+| `koreforge-json` | `RootPropertyClassifier`, `JsonMaterializer.Expand` |
+| `koreforge-time` | `ISystemClock`, `VirtualSystemClock` — never use `DateTime.UtcNow` directly |
+| `koreforge-monitoring` | Heartbeat registry, monitoring shell protocol |
+
+Whenever development reveals new information about how a KoreForge library works — a constraint, a correct usage pattern, a mistake to avoid, or a feature not yet documented — update the associated SKILL.md immediately to reflect that knowledge. If the new knowledge spans multiple skills or covers a library not yet listed, create a new skill under `.github/skills/<skill-name>/SKILL.md` and add it to this table.
