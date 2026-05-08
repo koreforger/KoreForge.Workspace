@@ -321,7 +321,6 @@ function Find-ReportFiles {
         (Join-Path $RepoPath "TestResults"),
         (Join-Path $RepoPath "coverage-report"),
         (Join-Path $RepoPath "artifacts"),
-        (Join-Path $RepoPath ".artifacts"),
         (Join-Path $RepoPath "out\StressResults")
     ) | Where-Object { Test-Path $_ }
 

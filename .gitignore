@@ -15,7 +15,6 @@ bin/
 obj/
 out/
 artifacts/
-.artifacts/
 TestResults/
 BenchmarkDotNet.Artifacts/
 coverage-report/
