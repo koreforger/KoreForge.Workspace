@@ -17,6 +17,7 @@ $root = Split-Path $PSScriptRoot -Parent
 $artifactsRoot = Join-Path $root 'artifacts'
 $packageRoot = Join-Path $artifactsRoot 'packages'
 $stagingRoot = Join-Path $packageRoot 'staging'
+$nugetConfig = Join-Path $root 'NuGet.config'
 New-Item -Path $packageRoot -ItemType Directory -Force | Out-Null
 if (Test-Path $stagingRoot) { Remove-Item $stagingRoot -Recurse -Force }
 New-Item -Path $stagingRoot -ItemType Directory -Force | Out-Null
@@ -38,6 +39,7 @@ $repos = @(
     'KoreForge.Scripts',
     'KoreForge.Settings',
     'KoreForge.Web',
+    'KoreForge.SwaggerControllers',
     'KoreForge.Kafka'
 )
 
@@ -61,6 +63,23 @@ foreach ($repo in $repos) {
         continue
     }
 
+    # Pack only the src/ packable projects to avoid test projects referencing stale
+    # published versions of their own package (VersionOverride issues during restore).
+    $srcDir = Join-Path $repoDir 'src'
+    $packableProjects = @()
+    if (Test-Path $srcDir) {
+        $packableProjects = @(Get-ChildItem -Path $srcDir -Filter '*.csproj' -Recurse -File |
+            Where-Object {
+                $content = Get-Content $_.FullName -Raw
+                $content -notmatch '<IsPackable>\s*false\s*</IsPackable>'
+            })
+    }
+
+    if ($packableProjects.Count -eq 0) {
+        Write-Warning "No packable src projects in $repo"
+        continue
+    }
+
     $artifactsDir = Join-Path $stagingRoot $repo
     $repoBuildRoot = Join-Path $artifactsRoot (Join-Path 'repos' (Join-Path $repo 'build'))
     $repoBinRoot   = Join-Path $repoBuildRoot 'bin'
@@ -78,41 +97,63 @@ foreach ($repo in $repos) {
     $asmVer  = "$($parts[0]).$($parts[1]).0.0"
     $fileVer = "$($parts[0]).$($parts[1]).$($parts[2]).0"
 
-    # Use /p:Version to override MinVer, /p:MinVerSkip=true to disable MinVer tag lookup.
-    # KoreForgeComponentBinRoot tells multi-DLL bundling csproj (e.g. KoreForge.Logging)
-    # where --artifacts-path routed the component DLLs; KoreForgeArtifactsConfiguration
-    # must be lowercase to match the artifacts-path directory convention.
-    dotnet pack $sln.FullName `
-        --configuration Release `
-        /p:Version=$Version `
-        /p:MinVerSkip=true `
-        /p:AssemblyVersion=$asmVer `
-        /p:FileVersion=$fileVer `
-        /p:ContinuousIntegrationBuild=true `
-        /p:KoreForgeComponentBinRoot=$repoBinRoot `
-        /p:KoreForgeArtifactsConfiguration=release `
-        --artifacts-path $repoBuildRoot `
-        -o $artifactsDir `
-        --no-restore 2>&1
+    # Multi-pass: retry failed projects so that sibling-dependency ordering is
+    # resolved automatically (e.g. Contracts before AspNetCore in the same repo).
+    $pendingProjects = [System.Collections.Generic.List[object]]$packableProjects
+    $maxPasses = $packableProjects.Count + 1
 
-    if ($LASTEXITCODE -ne 0) {
-        # Try with restore
-        Write-Host "  Retrying with restore…" -ForegroundColor Yellow
-        dotnet pack $sln.FullName `
-            --configuration Release `
-            /p:Version=$Version `
-            /p:MinVerSkip=true `
-            /p:AssemblyVersion=$asmVer `
-            /p:FileVersion=$fileVer `
-            /p:ContinuousIntegrationBuild=true `
-            /p:KoreForgeComponentBinRoot=$repoBinRoot `
-            /p:KoreForgeArtifactsConfiguration=release `
-            --artifacts-path $repoBuildRoot `
-            -o $artifactsDir 2>&1
+    while ($pendingProjects.Count -gt 0 -and $maxPasses -gt 0) {
+        $maxPasses--
+        $stillFailing = [System.Collections.Generic.List[object]]@()
 
-        if ($LASTEXITCODE -ne 0) {
-            Write-Error "Failed to pack $repo"
-            continue
+        foreach ($project in $pendingProjects) {
+            # Use /p:Version to override MinVer, /p:MinVerSkip=true to disable MinVer tag lookup.
+            # KoreForgeComponentBinRoot tells multi-DLL bundling csproj (e.g. KoreForge.Logging)
+            # where --artifacts-path routed the component DLLs; KoreForgeArtifactsConfiguration
+            # must be lowercase to match the artifacts-path directory convention.
+            $dotnetArgs = @(
+                'pack', $project.FullName,
+                '--configuration', 'Release',
+                "/p:Version=$Version",
+                '/p:MinVerSkip=true',
+                "/p:AssemblyVersion=$asmVer",
+                "/p:FileVersion=$fileVer",
+                '/p:ContinuousIntegrationBuild=true',
+                "/p:KoreForgeComponentBinRoot=$repoBinRoot",
+                '/p:KoreForgeArtifactsConfiguration=release',
+                "/p:RestoreConfigFile=$nugetConfig",
+                '--artifacts-path', $repoBuildRoot,
+                '-o', $artifactsDir
+            )
+
+            dotnet @dotnetArgs 2>&1
+            if ($LASTEXITCODE -ne 0) {
+                $stillFailing.Add($project)
+            } else {
+                # Copy any newly produced packages to the local feed immediately so that
+                # sibling packages in the same repo can restore them in the next pass.
+                $justPacked = Get-ChildItem -Path $artifactsDir -Filter '*.nupkg' -ErrorAction SilentlyContinue
+                foreach ($pkg in $justPacked) {
+                    $dest = Join-Path $packageRoot $pkg.Name
+                    if (-not (Test-Path $dest)) {
+                        Copy-Item -Path $pkg.FullName -Destination $dest -Force
+                    }
+                }
+            }
+        }
+
+        # If no progress was made this pass, stop retrying to avoid infinite loop.
+        if ($stillFailing.Count -eq $pendingProjects.Count) {
+            foreach ($p in $stillFailing) {
+                Write-Error "Failed to pack $($p.Name) in $repo"
+            }
+            break
+        }
+        $pendingProjects = $stillFailing
+    }
+    if ($pendingProjects.Count -gt 0 -and $maxPasses -eq 0) {
+        foreach ($p in $pendingProjects) {
+            Write-Error "Failed to pack $($p.Name) in $repo (max passes exceeded)"
         }
     }
 
